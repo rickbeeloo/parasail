@@ -18,3 +18,8 @@ run func_group_tables.py ../tests/func_verify_tables.h
 run func_group_rowcols.py ../tests/func_verify_rowcols.h
 run func_group_traces.py ../tests/func_verify_traces.h
 run makedef.py ../cmake/parasail.def
+
+echo "regenerating src/satcheck.c"
+"$PY" "$(dirname "$0")/satcheck.py"
+cp "$(dirname "$0")/generated/satcheck.c" ../src/satcheck.c
+echo "wrote ../src/satcheck.c"
