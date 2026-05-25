@@ -1,4 +1,19 @@
-/** * @file * * @author jeffrey.daily@gmail.com * * Copyright (c) 2015 Battelle Memorial Institute. */ #ifndef _PARASAIL_FUNCTION_TYPE_H_ #define _PARASAIL_FUNCTION_TYPE_H_  #include "parasail.h"  #ifdef __cplusplus extern "C" { #endif 
+/**
+ * @file
+ *
+ * @author jeffrey.daily@gmail.com
+ *
+ * Copyright (c) 2015 Battelle Memorial Institute.
+ */
+#ifndef _PARASAIL_FUNCTION_TYPE_H_
+#define _PARASAIL_FUNCTION_TYPE_H_
+
+#include "parasail.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 static const parasail_function_info_t functions[] = {
 {parasail_nw,                         "parasail_nw",                         "nw",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 0, 1},
 {parasail_nw_scan,                    "parasail_nw_scan",                    "nw",    "scan", "NA",     "32", "32",  1, 0, 0, 0, 0, 0},
@@ -20480,4 +20495,10 @@ static const parasail_pfunction_info_t pfunctions[] = {
 {parasail_sg_qx_de_trace_striped_profile_sat, parasail_profile_create_sat,         "parasail_sg_qx_de_trace_striped_profile_sat", "sg_qx_de", "striped_profile", "disp",   "NA", "sat", -1, 0, 0, 1, 0, 0},
 {NULL, NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
 };
- #ifdef __cplusplus } #endif  #endif /* _PARASAIL_FUNCTION_TYPE_H_ */ 
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* _PARASAIL_FUNCTION_TYPE_H_ */
+

@@ -37,7 +37,10 @@ def fix_source(source):
                 continue
             break
 
-        expr = ' '.join(p.strip() for p in parts).strip()
+        if len(parts) > 1:
+            expr = '\n'.join(parts)
+        else:
+            expr = parts[0].rstrip('\n\r')
         if expr.endswith('\\'):
             expr = expr[:-1].rstrip()
         out.append('%sprint(%s)\n' % (indent, expr))

@@ -1,4 +1,20 @@
-/** * @file * * @author jeffrey.daily@gmail.com * * Copyright (c) 2015 Battelle Memorial Institute. */ #ifndef _PARASAIL_FUNCTION_GROUP_TABLE_H_ #define _PARASAIL_FUNCTION_GROUP_TABLE_H_  #include "parasail.h"  typedef struct parasail_function_group { const char * name; parasail_function_info_t *fs; } parasail_function_group_t; 
+/**
+ * @file
+ *
+ * @author jeffrey.daily@gmail.com
+ *
+ * Copyright (c) 2015 Battelle Memorial Institute.
+ */
+#ifndef _PARASAIL_FUNCTION_GROUP_TABLE_H_
+#define _PARASAIL_FUNCTION_GROUP_TABLE_H_
+
+#include "parasail.h"
+
+typedef struct parasail_function_group {
+    const char * name;
+    parasail_function_info_t *fs;
+} parasail_function_group_t;
+
 #if HAVE_SSE2
 static parasail_function_info_t parasail_nw_table_sse2_functions[] = {
 {parasail_nw_table,                   "parasail_nw_table",                   "nw",    "orig", "NA",     "32", "32",  1, 1, 0, 0, 0, 1},
@@ -4113,4 +4129,6 @@ static parasail_function_info_t parasail_sg_qx_de_stats_table_serial_functions[]
 {NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
 };
 static parasail_function_group_t parasail_sg_qx_de_stats_table_serial = {"parasail_sg_qx_de_stats_table_serial", parasail_sg_qx_de_stats_table_serial_functions};
- #endif /* _PARASAIL_FUNCTION_GROUP_TABLE_H_ */ 
+
+#endif /* _PARASAIL_FUNCTION_GROUP_TABLE_H_ */
+
