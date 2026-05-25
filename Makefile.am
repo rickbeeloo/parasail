@@ -205,6 +205,10 @@ SRC_CORE += src/sg_qb_de_dispatch.c
 SRC_CORE += src/sg_qe_db_dispatch.c
 SRC_CORE += src/sg_qb_db_dispatch.c
 SRC_CORE += src/sg_qe_de_dispatch.c
+SRC_CORE += src/sg_qb_dx_dispatch.c
+SRC_CORE += src/sg_qe_dx_dispatch.c
+SRC_CORE += src/sg_qx_db_dispatch.c
+SRC_CORE += src/sg_qx_de_dispatch.c
 SRC_CORE += src/dispatch_profile.c
 SRC_CORE += src/satcheck.c
 SRC_CORE += src/striped_unwind.c
@@ -1168,6 +1172,7 @@ check_PROGRAMS += tests/test_12
 check_PROGRAMS += tests/test_64
 check_PROGRAMS += tests/test_p29
 check_PROGRAMS += tests/test_p59
+check_PROGRAMS += tests/test_69
 if HAVE_SSE2
 check_PROGRAMS += tests/test_ssw
 check_PROGRAMS += tests/ssw_vs_pssw
@@ -1305,6 +1310,8 @@ tests_test_p59_SOURCES =
 tests_test_p59_SOURCES += tests/test_p59.c
 tests_test_p59_SOURCES += tests/test_p59.h
 
+tests_test_69_SOURCES = tests/test_69.c
+
 EXTRA_DIST += .gitignore
 EXTRA_DIST += CHANGELOG.md
 EXTRA_DIST += CMakeLists.txt
@@ -1408,6 +1415,9 @@ EXTRA_DIST += util/isa.py
 EXTRA_DIST += util/isastubs.py
 EXTRA_DIST += util/makedef.py
 EXTRA_DIST += util/names.py
+EXTRA_DIST += util/patch_parasail_h.py
+EXTRA_DIST += util/fix_py2_print.py
+EXTRA_DIST += util/run_py2_codegen.sh
 EXTRA_DIST += util/satcheck.py
 EXTRA_DIST += util/tester.py
 EXTRA_DIST += util/matrices/BLOSUM100

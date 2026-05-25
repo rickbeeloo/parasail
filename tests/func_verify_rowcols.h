@@ -1,20 +1,4 @@
-/**
- * @file
- *
- * @author jeffrey.daily@gmail.com
- *
- * Copyright (c) 2015 Battelle Memorial Institute.
- */
-#ifndef _PARASAIL_FUNCTION_GROUP_ROWCOL_H_
-#define _PARASAIL_FUNCTION_GROUP_ROWCOL_H_
-
-#include "parasail.h"
-
-typedef struct parasail_function_group {
-    const char * name;
-    parasail_function_info_t *fs;
-} parasail_function_group_t;
-
+/** * @file * * @author jeffrey.daily@gmail.com * * Copyright (c) 2015 Battelle Memorial Institute. */ #ifndef _PARASAIL_FUNCTION_GROUP_ROWCOL_H_ #define _PARASAIL_FUNCTION_GROUP_ROWCOL_H_  #include "parasail.h"  typedef struct parasail_function_group { const char * name; parasail_function_info_t *fs; } parasail_function_group_t; 
 #if HAVE_SSE2
 static parasail_function_info_t parasail_nw_rowcol_sse2_functions[] = {
 {parasail_nw_rowcol,                  "parasail_nw_rowcol",                  "nw",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 0, 1},
@@ -1589,6 +1573,490 @@ static parasail_function_info_t parasail_sg_qe_de_rowcol_disp_functions[] = {
 };
 static parasail_function_group_t parasail_sg_qe_de_rowcol_disp = {"parasail_sg_qe_de_rowcol_disp", parasail_sg_qe_de_rowcol_disp_functions};
 #if HAVE_SSE2
+static parasail_function_info_t parasail_sg_qb_dx_rowcol_sse2_functions[] = {
+{parasail_sg_qb_dx_rowcol,            "parasail_sg_qb_dx_rowcol",            "sg_qb_dx",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 0, 1},
+{parasail_sg_qb_dx_rowcol_scan,       "parasail_sg_qb_dx_rowcol_scan",       "sg_qb_dx",    "scan", "NA",     "32", "32",  1, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_scan_sse2_128_64, "parasail_sg_qb_dx_rowcol_scan_sse2_128_64", "sg_qb_dx",    "scan", "sse2",  "128", "64",  2, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_scan_sse2_128_32, "parasail_sg_qb_dx_rowcol_scan_sse2_128_32", "sg_qb_dx",    "scan", "sse2",  "128", "32",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_scan_sse2_128_16, "parasail_sg_qb_dx_rowcol_scan_sse2_128_16", "sg_qb_dx",    "scan", "sse2",  "128", "16",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_scan_sse2_128_8, "parasail_sg_qb_dx_rowcol_scan_sse2_128_8", "sg_qb_dx",    "scan", "sse2",  "128",  "8", 16, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_striped_sse2_128_64, "parasail_sg_qb_dx_rowcol_striped_sse2_128_64", "sg_qb_dx", "striped", "sse2",  "128", "64",  2, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_striped_sse2_128_32, "parasail_sg_qb_dx_rowcol_striped_sse2_128_32", "sg_qb_dx", "striped", "sse2",  "128", "32",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_striped_sse2_128_16, "parasail_sg_qb_dx_rowcol_striped_sse2_128_16", "sg_qb_dx", "striped", "sse2",  "128", "16",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_striped_sse2_128_8, "parasail_sg_qb_dx_rowcol_striped_sse2_128_8", "sg_qb_dx", "striped", "sse2",  "128",  "8", 16, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_diag_sse2_128_64, "parasail_sg_qb_dx_rowcol_diag_sse2_128_64", "sg_qb_dx",    "diag", "sse2",  "128", "64",  2, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_diag_sse2_128_32, "parasail_sg_qb_dx_rowcol_diag_sse2_128_32", "sg_qb_dx",    "diag", "sse2",  "128", "32",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_diag_sse2_128_16, "parasail_sg_qb_dx_rowcol_diag_sse2_128_16", "sg_qb_dx",    "diag", "sse2",  "128", "16",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_diag_sse2_128_8, "parasail_sg_qb_dx_rowcol_diag_sse2_128_8", "sg_qb_dx",    "diag", "sse2",  "128",  "8", 16, 0, 0, 0, 0, 0},
+{NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
+};
+static parasail_function_group_t parasail_sg_qb_dx_rowcol_sse2 = {"parasail_sg_qb_dx_rowcol_sse2", parasail_sg_qb_dx_rowcol_sse2_functions};
+#endif
+#if HAVE_SSE41
+static parasail_function_info_t parasail_sg_qb_dx_rowcol_sse41_functions[] = {
+{parasail_sg_qb_dx_rowcol,            "parasail_sg_qb_dx_rowcol",            "sg_qb_dx",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 0, 1},
+{parasail_sg_qb_dx_rowcol_scan,       "parasail_sg_qb_dx_rowcol_scan",       "sg_qb_dx",    "scan", "NA",     "32", "32",  1, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_scan_sse41_128_64, "parasail_sg_qb_dx_rowcol_scan_sse41_128_64", "sg_qb_dx",    "scan", "sse41", "128", "64",  2, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_scan_sse41_128_32, "parasail_sg_qb_dx_rowcol_scan_sse41_128_32", "sg_qb_dx",    "scan", "sse41", "128", "32",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_scan_sse41_128_16, "parasail_sg_qb_dx_rowcol_scan_sse41_128_16", "sg_qb_dx",    "scan", "sse41", "128", "16",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_scan_sse41_128_8, "parasail_sg_qb_dx_rowcol_scan_sse41_128_8", "sg_qb_dx",    "scan", "sse41", "128",  "8", 16, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_striped_sse41_128_64, "parasail_sg_qb_dx_rowcol_striped_sse41_128_64", "sg_qb_dx", "striped", "sse41", "128", "64",  2, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_striped_sse41_128_32, "parasail_sg_qb_dx_rowcol_striped_sse41_128_32", "sg_qb_dx", "striped", "sse41", "128", "32",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_striped_sse41_128_16, "parasail_sg_qb_dx_rowcol_striped_sse41_128_16", "sg_qb_dx", "striped", "sse41", "128", "16",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_striped_sse41_128_8, "parasail_sg_qb_dx_rowcol_striped_sse41_128_8", "sg_qb_dx", "striped", "sse41", "128",  "8", 16, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_diag_sse41_128_64, "parasail_sg_qb_dx_rowcol_diag_sse41_128_64", "sg_qb_dx",    "diag", "sse41", "128", "64",  2, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_diag_sse41_128_32, "parasail_sg_qb_dx_rowcol_diag_sse41_128_32", "sg_qb_dx",    "diag", "sse41", "128", "32",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_diag_sse41_128_16, "parasail_sg_qb_dx_rowcol_diag_sse41_128_16", "sg_qb_dx",    "diag", "sse41", "128", "16",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_diag_sse41_128_8, "parasail_sg_qb_dx_rowcol_diag_sse41_128_8", "sg_qb_dx",    "diag", "sse41", "128",  "8", 16, 0, 0, 0, 0, 0},
+{NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
+};
+static parasail_function_group_t parasail_sg_qb_dx_rowcol_sse41 = {"parasail_sg_qb_dx_rowcol_sse41", parasail_sg_qb_dx_rowcol_sse41_functions};
+#endif
+#if HAVE_AVX2
+static parasail_function_info_t parasail_sg_qb_dx_rowcol_avx2_functions[] = {
+{parasail_sg_qb_dx_rowcol,            "parasail_sg_qb_dx_rowcol",            "sg_qb_dx",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 0, 1},
+{parasail_sg_qb_dx_rowcol_scan,       "parasail_sg_qb_dx_rowcol_scan",       "sg_qb_dx",    "scan", "NA",     "32", "32",  1, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_scan_avx2_256_64, "parasail_sg_qb_dx_rowcol_scan_avx2_256_64", "sg_qb_dx",    "scan", "avx2",  "256", "64",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_scan_avx2_256_32, "parasail_sg_qb_dx_rowcol_scan_avx2_256_32", "sg_qb_dx",    "scan", "avx2",  "256", "32",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_scan_avx2_256_16, "parasail_sg_qb_dx_rowcol_scan_avx2_256_16", "sg_qb_dx",    "scan", "avx2",  "256", "16", 16, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_scan_avx2_256_8, "parasail_sg_qb_dx_rowcol_scan_avx2_256_8", "sg_qb_dx",    "scan", "avx2",  "256",  "8", 32, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_striped_avx2_256_64, "parasail_sg_qb_dx_rowcol_striped_avx2_256_64", "sg_qb_dx", "striped", "avx2",  "256", "64",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_striped_avx2_256_32, "parasail_sg_qb_dx_rowcol_striped_avx2_256_32", "sg_qb_dx", "striped", "avx2",  "256", "32",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_striped_avx2_256_16, "parasail_sg_qb_dx_rowcol_striped_avx2_256_16", "sg_qb_dx", "striped", "avx2",  "256", "16", 16, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_striped_avx2_256_8, "parasail_sg_qb_dx_rowcol_striped_avx2_256_8", "sg_qb_dx", "striped", "avx2",  "256",  "8", 32, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_diag_avx2_256_64, "parasail_sg_qb_dx_rowcol_diag_avx2_256_64", "sg_qb_dx",    "diag", "avx2",  "256", "64",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_diag_avx2_256_32, "parasail_sg_qb_dx_rowcol_diag_avx2_256_32", "sg_qb_dx",    "diag", "avx2",  "256", "32",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_diag_avx2_256_16, "parasail_sg_qb_dx_rowcol_diag_avx2_256_16", "sg_qb_dx",    "diag", "avx2",  "256", "16", 16, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_diag_avx2_256_8, "parasail_sg_qb_dx_rowcol_diag_avx2_256_8", "sg_qb_dx",    "diag", "avx2",  "256",  "8", 32, 0, 0, 0, 0, 0},
+{NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
+};
+static parasail_function_group_t parasail_sg_qb_dx_rowcol_avx2 = {"parasail_sg_qb_dx_rowcol_avx2", parasail_sg_qb_dx_rowcol_avx2_functions};
+#endif
+#if HAVE_ALTIVEC
+static parasail_function_info_t parasail_sg_qb_dx_rowcol_altivec_functions[] = {
+{parasail_sg_qb_dx_rowcol,            "parasail_sg_qb_dx_rowcol",            "sg_qb_dx",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 0, 1},
+{parasail_sg_qb_dx_rowcol_scan,       "parasail_sg_qb_dx_rowcol_scan",       "sg_qb_dx",    "scan", "NA",     "32", "32",  1, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_scan_altivec_128_64, "parasail_sg_qb_dx_rowcol_scan_altivec_128_64", "sg_qb_dx",    "scan", "altivec", "128", "64",  2, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_scan_altivec_128_32, "parasail_sg_qb_dx_rowcol_scan_altivec_128_32", "sg_qb_dx",    "scan", "altivec", "128", "32",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_scan_altivec_128_16, "parasail_sg_qb_dx_rowcol_scan_altivec_128_16", "sg_qb_dx",    "scan", "altivec", "128", "16",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_scan_altivec_128_8, "parasail_sg_qb_dx_rowcol_scan_altivec_128_8", "sg_qb_dx",    "scan", "altivec", "128",  "8", 16, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_striped_altivec_128_64, "parasail_sg_qb_dx_rowcol_striped_altivec_128_64", "sg_qb_dx", "striped", "altivec", "128", "64",  2, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_striped_altivec_128_32, "parasail_sg_qb_dx_rowcol_striped_altivec_128_32", "sg_qb_dx", "striped", "altivec", "128", "32",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_striped_altivec_128_16, "parasail_sg_qb_dx_rowcol_striped_altivec_128_16", "sg_qb_dx", "striped", "altivec", "128", "16",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_striped_altivec_128_8, "parasail_sg_qb_dx_rowcol_striped_altivec_128_8", "sg_qb_dx", "striped", "altivec", "128",  "8", 16, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_diag_altivec_128_64, "parasail_sg_qb_dx_rowcol_diag_altivec_128_64", "sg_qb_dx",    "diag", "altivec", "128", "64",  2, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_diag_altivec_128_32, "parasail_sg_qb_dx_rowcol_diag_altivec_128_32", "sg_qb_dx",    "diag", "altivec", "128", "32",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_diag_altivec_128_16, "parasail_sg_qb_dx_rowcol_diag_altivec_128_16", "sg_qb_dx",    "diag", "altivec", "128", "16",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_diag_altivec_128_8, "parasail_sg_qb_dx_rowcol_diag_altivec_128_8", "sg_qb_dx",    "diag", "altivec", "128",  "8", 16, 0, 0, 0, 0, 0},
+{NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
+};
+static parasail_function_group_t parasail_sg_qb_dx_rowcol_altivec = {"parasail_sg_qb_dx_rowcol_altivec", parasail_sg_qb_dx_rowcol_altivec_functions};
+#endif
+#if HAVE_NEON
+static parasail_function_info_t parasail_sg_qb_dx_rowcol_neon_functions[] = {
+{parasail_sg_qb_dx_rowcol,            "parasail_sg_qb_dx_rowcol",            "sg_qb_dx",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 0, 1},
+{parasail_sg_qb_dx_rowcol_scan,       "parasail_sg_qb_dx_rowcol_scan",       "sg_qb_dx",    "scan", "NA",     "32", "32",  1, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_scan_neon_128_64, "parasail_sg_qb_dx_rowcol_scan_neon_128_64", "sg_qb_dx",    "scan", "neon",  "128", "64",  2, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_scan_neon_128_32, "parasail_sg_qb_dx_rowcol_scan_neon_128_32", "sg_qb_dx",    "scan", "neon",  "128", "32",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_scan_neon_128_16, "parasail_sg_qb_dx_rowcol_scan_neon_128_16", "sg_qb_dx",    "scan", "neon",  "128", "16",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_scan_neon_128_8, "parasail_sg_qb_dx_rowcol_scan_neon_128_8", "sg_qb_dx",    "scan", "neon",  "128",  "8", 16, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_striped_neon_128_64, "parasail_sg_qb_dx_rowcol_striped_neon_128_64", "sg_qb_dx", "striped", "neon",  "128", "64",  2, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_striped_neon_128_32, "parasail_sg_qb_dx_rowcol_striped_neon_128_32", "sg_qb_dx", "striped", "neon",  "128", "32",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_striped_neon_128_16, "parasail_sg_qb_dx_rowcol_striped_neon_128_16", "sg_qb_dx", "striped", "neon",  "128", "16",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_striped_neon_128_8, "parasail_sg_qb_dx_rowcol_striped_neon_128_8", "sg_qb_dx", "striped", "neon",  "128",  "8", 16, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_diag_neon_128_64, "parasail_sg_qb_dx_rowcol_diag_neon_128_64", "sg_qb_dx",    "diag", "neon",  "128", "64",  2, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_diag_neon_128_32, "parasail_sg_qb_dx_rowcol_diag_neon_128_32", "sg_qb_dx",    "diag", "neon",  "128", "32",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_diag_neon_128_16, "parasail_sg_qb_dx_rowcol_diag_neon_128_16", "sg_qb_dx",    "diag", "neon",  "128", "16",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_diag_neon_128_8, "parasail_sg_qb_dx_rowcol_diag_neon_128_8", "sg_qb_dx",    "diag", "neon",  "128",  "8", 16, 0, 0, 0, 0, 0},
+{NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
+};
+static parasail_function_group_t parasail_sg_qb_dx_rowcol_neon = {"parasail_sg_qb_dx_rowcol_neon", parasail_sg_qb_dx_rowcol_neon_functions};
+#endif
+static parasail_function_info_t parasail_sg_qb_dx_rowcol_disp_functions[] = {
+{parasail_sg_qb_dx_rowcol,            "parasail_sg_qb_dx_rowcol",            "sg_qb_dx",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 0, 1},
+{parasail_sg_qb_dx_rowcol_scan,       "parasail_sg_qb_dx_rowcol_scan",       "sg_qb_dx",    "scan", "NA",     "32", "32",  1, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_scan_64,    "parasail_sg_qb_dx_rowcol_scan_64",    "sg_qb_dx",    "scan", "disp",   "NA", "64", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_scan_32,    "parasail_sg_qb_dx_rowcol_scan_32",    "sg_qb_dx",    "scan", "disp",   "NA", "32", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_scan_16,    "parasail_sg_qb_dx_rowcol_scan_16",    "sg_qb_dx",    "scan", "disp",   "NA", "16", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_scan_8,     "parasail_sg_qb_dx_rowcol_scan_8",     "sg_qb_dx",    "scan", "disp",   "NA",  "8", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_striped_64, "parasail_sg_qb_dx_rowcol_striped_64", "sg_qb_dx", "striped", "disp",   "NA", "64", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_striped_32, "parasail_sg_qb_dx_rowcol_striped_32", "sg_qb_dx", "striped", "disp",   "NA", "32", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_striped_16, "parasail_sg_qb_dx_rowcol_striped_16", "sg_qb_dx", "striped", "disp",   "NA", "16", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_striped_8,  "parasail_sg_qb_dx_rowcol_striped_8",  "sg_qb_dx", "striped", "disp",   "NA",  "8", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_diag_64,    "parasail_sg_qb_dx_rowcol_diag_64",    "sg_qb_dx",    "diag", "disp",   "NA", "64", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_diag_32,    "parasail_sg_qb_dx_rowcol_diag_32",    "sg_qb_dx",    "diag", "disp",   "NA", "32", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_diag_16,    "parasail_sg_qb_dx_rowcol_diag_16",    "sg_qb_dx",    "diag", "disp",   "NA", "16", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_diag_8,     "parasail_sg_qb_dx_rowcol_diag_8",     "sg_qb_dx",    "diag", "disp",   "NA",  "8", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_scan_sat,   "parasail_sg_qb_dx_rowcol_scan_sat",   "sg_qb_dx",    "scan", "sat",    "NA",  "8", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_striped_sat, "parasail_sg_qb_dx_rowcol_striped_sat", "sg_qb_dx", "striped", "sat",    "NA",  "8", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qb_dx_rowcol_diag_sat,   "parasail_sg_qb_dx_rowcol_diag_sat",   "sg_qb_dx",    "diag", "sat",    "NA",  "8", -1, 0, 0, 0, 0, 0},
+{NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
+};
+static parasail_function_group_t parasail_sg_qb_dx_rowcol_disp = {"parasail_sg_qb_dx_rowcol_disp", parasail_sg_qb_dx_rowcol_disp_functions};
+#if HAVE_SSE2
+static parasail_function_info_t parasail_sg_qe_dx_rowcol_sse2_functions[] = {
+{parasail_sg_qe_dx_rowcol,            "parasail_sg_qe_dx_rowcol",            "sg_qe_dx",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 0, 1},
+{parasail_sg_qe_dx_rowcol_scan,       "parasail_sg_qe_dx_rowcol_scan",       "sg_qe_dx",    "scan", "NA",     "32", "32",  1, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_scan_sse2_128_64, "parasail_sg_qe_dx_rowcol_scan_sse2_128_64", "sg_qe_dx",    "scan", "sse2",  "128", "64",  2, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_scan_sse2_128_32, "parasail_sg_qe_dx_rowcol_scan_sse2_128_32", "sg_qe_dx",    "scan", "sse2",  "128", "32",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_scan_sse2_128_16, "parasail_sg_qe_dx_rowcol_scan_sse2_128_16", "sg_qe_dx",    "scan", "sse2",  "128", "16",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_scan_sse2_128_8, "parasail_sg_qe_dx_rowcol_scan_sse2_128_8", "sg_qe_dx",    "scan", "sse2",  "128",  "8", 16, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_striped_sse2_128_64, "parasail_sg_qe_dx_rowcol_striped_sse2_128_64", "sg_qe_dx", "striped", "sse2",  "128", "64",  2, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_striped_sse2_128_32, "parasail_sg_qe_dx_rowcol_striped_sse2_128_32", "sg_qe_dx", "striped", "sse2",  "128", "32",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_striped_sse2_128_16, "parasail_sg_qe_dx_rowcol_striped_sse2_128_16", "sg_qe_dx", "striped", "sse2",  "128", "16",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_striped_sse2_128_8, "parasail_sg_qe_dx_rowcol_striped_sse2_128_8", "sg_qe_dx", "striped", "sse2",  "128",  "8", 16, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_diag_sse2_128_64, "parasail_sg_qe_dx_rowcol_diag_sse2_128_64", "sg_qe_dx",    "diag", "sse2",  "128", "64",  2, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_diag_sse2_128_32, "parasail_sg_qe_dx_rowcol_diag_sse2_128_32", "sg_qe_dx",    "diag", "sse2",  "128", "32",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_diag_sse2_128_16, "parasail_sg_qe_dx_rowcol_diag_sse2_128_16", "sg_qe_dx",    "diag", "sse2",  "128", "16",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_diag_sse2_128_8, "parasail_sg_qe_dx_rowcol_diag_sse2_128_8", "sg_qe_dx",    "diag", "sse2",  "128",  "8", 16, 0, 0, 0, 0, 0},
+{NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
+};
+static parasail_function_group_t parasail_sg_qe_dx_rowcol_sse2 = {"parasail_sg_qe_dx_rowcol_sse2", parasail_sg_qe_dx_rowcol_sse2_functions};
+#endif
+#if HAVE_SSE41
+static parasail_function_info_t parasail_sg_qe_dx_rowcol_sse41_functions[] = {
+{parasail_sg_qe_dx_rowcol,            "parasail_sg_qe_dx_rowcol",            "sg_qe_dx",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 0, 1},
+{parasail_sg_qe_dx_rowcol_scan,       "parasail_sg_qe_dx_rowcol_scan",       "sg_qe_dx",    "scan", "NA",     "32", "32",  1, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_scan_sse41_128_64, "parasail_sg_qe_dx_rowcol_scan_sse41_128_64", "sg_qe_dx",    "scan", "sse41", "128", "64",  2, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_scan_sse41_128_32, "parasail_sg_qe_dx_rowcol_scan_sse41_128_32", "sg_qe_dx",    "scan", "sse41", "128", "32",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_scan_sse41_128_16, "parasail_sg_qe_dx_rowcol_scan_sse41_128_16", "sg_qe_dx",    "scan", "sse41", "128", "16",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_scan_sse41_128_8, "parasail_sg_qe_dx_rowcol_scan_sse41_128_8", "sg_qe_dx",    "scan", "sse41", "128",  "8", 16, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_striped_sse41_128_64, "parasail_sg_qe_dx_rowcol_striped_sse41_128_64", "sg_qe_dx", "striped", "sse41", "128", "64",  2, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_striped_sse41_128_32, "parasail_sg_qe_dx_rowcol_striped_sse41_128_32", "sg_qe_dx", "striped", "sse41", "128", "32",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_striped_sse41_128_16, "parasail_sg_qe_dx_rowcol_striped_sse41_128_16", "sg_qe_dx", "striped", "sse41", "128", "16",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_striped_sse41_128_8, "parasail_sg_qe_dx_rowcol_striped_sse41_128_8", "sg_qe_dx", "striped", "sse41", "128",  "8", 16, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_diag_sse41_128_64, "parasail_sg_qe_dx_rowcol_diag_sse41_128_64", "sg_qe_dx",    "diag", "sse41", "128", "64",  2, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_diag_sse41_128_32, "parasail_sg_qe_dx_rowcol_diag_sse41_128_32", "sg_qe_dx",    "diag", "sse41", "128", "32",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_diag_sse41_128_16, "parasail_sg_qe_dx_rowcol_diag_sse41_128_16", "sg_qe_dx",    "diag", "sse41", "128", "16",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_diag_sse41_128_8, "parasail_sg_qe_dx_rowcol_diag_sse41_128_8", "sg_qe_dx",    "diag", "sse41", "128",  "8", 16, 0, 0, 0, 0, 0},
+{NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
+};
+static parasail_function_group_t parasail_sg_qe_dx_rowcol_sse41 = {"parasail_sg_qe_dx_rowcol_sse41", parasail_sg_qe_dx_rowcol_sse41_functions};
+#endif
+#if HAVE_AVX2
+static parasail_function_info_t parasail_sg_qe_dx_rowcol_avx2_functions[] = {
+{parasail_sg_qe_dx_rowcol,            "parasail_sg_qe_dx_rowcol",            "sg_qe_dx",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 0, 1},
+{parasail_sg_qe_dx_rowcol_scan,       "parasail_sg_qe_dx_rowcol_scan",       "sg_qe_dx",    "scan", "NA",     "32", "32",  1, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_scan_avx2_256_64, "parasail_sg_qe_dx_rowcol_scan_avx2_256_64", "sg_qe_dx",    "scan", "avx2",  "256", "64",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_scan_avx2_256_32, "parasail_sg_qe_dx_rowcol_scan_avx2_256_32", "sg_qe_dx",    "scan", "avx2",  "256", "32",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_scan_avx2_256_16, "parasail_sg_qe_dx_rowcol_scan_avx2_256_16", "sg_qe_dx",    "scan", "avx2",  "256", "16", 16, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_scan_avx2_256_8, "parasail_sg_qe_dx_rowcol_scan_avx2_256_8", "sg_qe_dx",    "scan", "avx2",  "256",  "8", 32, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_striped_avx2_256_64, "parasail_sg_qe_dx_rowcol_striped_avx2_256_64", "sg_qe_dx", "striped", "avx2",  "256", "64",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_striped_avx2_256_32, "parasail_sg_qe_dx_rowcol_striped_avx2_256_32", "sg_qe_dx", "striped", "avx2",  "256", "32",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_striped_avx2_256_16, "parasail_sg_qe_dx_rowcol_striped_avx2_256_16", "sg_qe_dx", "striped", "avx2",  "256", "16", 16, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_striped_avx2_256_8, "parasail_sg_qe_dx_rowcol_striped_avx2_256_8", "sg_qe_dx", "striped", "avx2",  "256",  "8", 32, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_diag_avx2_256_64, "parasail_sg_qe_dx_rowcol_diag_avx2_256_64", "sg_qe_dx",    "diag", "avx2",  "256", "64",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_diag_avx2_256_32, "parasail_sg_qe_dx_rowcol_diag_avx2_256_32", "sg_qe_dx",    "diag", "avx2",  "256", "32",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_diag_avx2_256_16, "parasail_sg_qe_dx_rowcol_diag_avx2_256_16", "sg_qe_dx",    "diag", "avx2",  "256", "16", 16, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_diag_avx2_256_8, "parasail_sg_qe_dx_rowcol_diag_avx2_256_8", "sg_qe_dx",    "diag", "avx2",  "256",  "8", 32, 0, 0, 0, 0, 0},
+{NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
+};
+static parasail_function_group_t parasail_sg_qe_dx_rowcol_avx2 = {"parasail_sg_qe_dx_rowcol_avx2", parasail_sg_qe_dx_rowcol_avx2_functions};
+#endif
+#if HAVE_ALTIVEC
+static parasail_function_info_t parasail_sg_qe_dx_rowcol_altivec_functions[] = {
+{parasail_sg_qe_dx_rowcol,            "parasail_sg_qe_dx_rowcol",            "sg_qe_dx",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 0, 1},
+{parasail_sg_qe_dx_rowcol_scan,       "parasail_sg_qe_dx_rowcol_scan",       "sg_qe_dx",    "scan", "NA",     "32", "32",  1, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_scan_altivec_128_64, "parasail_sg_qe_dx_rowcol_scan_altivec_128_64", "sg_qe_dx",    "scan", "altivec", "128", "64",  2, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_scan_altivec_128_32, "parasail_sg_qe_dx_rowcol_scan_altivec_128_32", "sg_qe_dx",    "scan", "altivec", "128", "32",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_scan_altivec_128_16, "parasail_sg_qe_dx_rowcol_scan_altivec_128_16", "sg_qe_dx",    "scan", "altivec", "128", "16",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_scan_altivec_128_8, "parasail_sg_qe_dx_rowcol_scan_altivec_128_8", "sg_qe_dx",    "scan", "altivec", "128",  "8", 16, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_striped_altivec_128_64, "parasail_sg_qe_dx_rowcol_striped_altivec_128_64", "sg_qe_dx", "striped", "altivec", "128", "64",  2, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_striped_altivec_128_32, "parasail_sg_qe_dx_rowcol_striped_altivec_128_32", "sg_qe_dx", "striped", "altivec", "128", "32",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_striped_altivec_128_16, "parasail_sg_qe_dx_rowcol_striped_altivec_128_16", "sg_qe_dx", "striped", "altivec", "128", "16",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_striped_altivec_128_8, "parasail_sg_qe_dx_rowcol_striped_altivec_128_8", "sg_qe_dx", "striped", "altivec", "128",  "8", 16, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_diag_altivec_128_64, "parasail_sg_qe_dx_rowcol_diag_altivec_128_64", "sg_qe_dx",    "diag", "altivec", "128", "64",  2, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_diag_altivec_128_32, "parasail_sg_qe_dx_rowcol_diag_altivec_128_32", "sg_qe_dx",    "diag", "altivec", "128", "32",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_diag_altivec_128_16, "parasail_sg_qe_dx_rowcol_diag_altivec_128_16", "sg_qe_dx",    "diag", "altivec", "128", "16",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_diag_altivec_128_8, "parasail_sg_qe_dx_rowcol_diag_altivec_128_8", "sg_qe_dx",    "diag", "altivec", "128",  "8", 16, 0, 0, 0, 0, 0},
+{NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
+};
+static parasail_function_group_t parasail_sg_qe_dx_rowcol_altivec = {"parasail_sg_qe_dx_rowcol_altivec", parasail_sg_qe_dx_rowcol_altivec_functions};
+#endif
+#if HAVE_NEON
+static parasail_function_info_t parasail_sg_qe_dx_rowcol_neon_functions[] = {
+{parasail_sg_qe_dx_rowcol,            "parasail_sg_qe_dx_rowcol",            "sg_qe_dx",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 0, 1},
+{parasail_sg_qe_dx_rowcol_scan,       "parasail_sg_qe_dx_rowcol_scan",       "sg_qe_dx",    "scan", "NA",     "32", "32",  1, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_scan_neon_128_64, "parasail_sg_qe_dx_rowcol_scan_neon_128_64", "sg_qe_dx",    "scan", "neon",  "128", "64",  2, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_scan_neon_128_32, "parasail_sg_qe_dx_rowcol_scan_neon_128_32", "sg_qe_dx",    "scan", "neon",  "128", "32",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_scan_neon_128_16, "parasail_sg_qe_dx_rowcol_scan_neon_128_16", "sg_qe_dx",    "scan", "neon",  "128", "16",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_scan_neon_128_8, "parasail_sg_qe_dx_rowcol_scan_neon_128_8", "sg_qe_dx",    "scan", "neon",  "128",  "8", 16, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_striped_neon_128_64, "parasail_sg_qe_dx_rowcol_striped_neon_128_64", "sg_qe_dx", "striped", "neon",  "128", "64",  2, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_striped_neon_128_32, "parasail_sg_qe_dx_rowcol_striped_neon_128_32", "sg_qe_dx", "striped", "neon",  "128", "32",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_striped_neon_128_16, "parasail_sg_qe_dx_rowcol_striped_neon_128_16", "sg_qe_dx", "striped", "neon",  "128", "16",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_striped_neon_128_8, "parasail_sg_qe_dx_rowcol_striped_neon_128_8", "sg_qe_dx", "striped", "neon",  "128",  "8", 16, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_diag_neon_128_64, "parasail_sg_qe_dx_rowcol_diag_neon_128_64", "sg_qe_dx",    "diag", "neon",  "128", "64",  2, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_diag_neon_128_32, "parasail_sg_qe_dx_rowcol_diag_neon_128_32", "sg_qe_dx",    "diag", "neon",  "128", "32",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_diag_neon_128_16, "parasail_sg_qe_dx_rowcol_diag_neon_128_16", "sg_qe_dx",    "diag", "neon",  "128", "16",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_diag_neon_128_8, "parasail_sg_qe_dx_rowcol_diag_neon_128_8", "sg_qe_dx",    "diag", "neon",  "128",  "8", 16, 0, 0, 0, 0, 0},
+{NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
+};
+static parasail_function_group_t parasail_sg_qe_dx_rowcol_neon = {"parasail_sg_qe_dx_rowcol_neon", parasail_sg_qe_dx_rowcol_neon_functions};
+#endif
+static parasail_function_info_t parasail_sg_qe_dx_rowcol_disp_functions[] = {
+{parasail_sg_qe_dx_rowcol,            "parasail_sg_qe_dx_rowcol",            "sg_qe_dx",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 0, 1},
+{parasail_sg_qe_dx_rowcol_scan,       "parasail_sg_qe_dx_rowcol_scan",       "sg_qe_dx",    "scan", "NA",     "32", "32",  1, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_scan_64,    "parasail_sg_qe_dx_rowcol_scan_64",    "sg_qe_dx",    "scan", "disp",   "NA", "64", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_scan_32,    "parasail_sg_qe_dx_rowcol_scan_32",    "sg_qe_dx",    "scan", "disp",   "NA", "32", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_scan_16,    "parasail_sg_qe_dx_rowcol_scan_16",    "sg_qe_dx",    "scan", "disp",   "NA", "16", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_scan_8,     "parasail_sg_qe_dx_rowcol_scan_8",     "sg_qe_dx",    "scan", "disp",   "NA",  "8", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_striped_64, "parasail_sg_qe_dx_rowcol_striped_64", "sg_qe_dx", "striped", "disp",   "NA", "64", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_striped_32, "parasail_sg_qe_dx_rowcol_striped_32", "sg_qe_dx", "striped", "disp",   "NA", "32", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_striped_16, "parasail_sg_qe_dx_rowcol_striped_16", "sg_qe_dx", "striped", "disp",   "NA", "16", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_striped_8,  "parasail_sg_qe_dx_rowcol_striped_8",  "sg_qe_dx", "striped", "disp",   "NA",  "8", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_diag_64,    "parasail_sg_qe_dx_rowcol_diag_64",    "sg_qe_dx",    "diag", "disp",   "NA", "64", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_diag_32,    "parasail_sg_qe_dx_rowcol_diag_32",    "sg_qe_dx",    "diag", "disp",   "NA", "32", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_diag_16,    "parasail_sg_qe_dx_rowcol_diag_16",    "sg_qe_dx",    "diag", "disp",   "NA", "16", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_diag_8,     "parasail_sg_qe_dx_rowcol_diag_8",     "sg_qe_dx",    "diag", "disp",   "NA",  "8", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_scan_sat,   "parasail_sg_qe_dx_rowcol_scan_sat",   "sg_qe_dx",    "scan", "sat",    "NA",  "8", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_striped_sat, "parasail_sg_qe_dx_rowcol_striped_sat", "sg_qe_dx", "striped", "sat",    "NA",  "8", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qe_dx_rowcol_diag_sat,   "parasail_sg_qe_dx_rowcol_diag_sat",   "sg_qe_dx",    "diag", "sat",    "NA",  "8", -1, 0, 0, 0, 0, 0},
+{NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
+};
+static parasail_function_group_t parasail_sg_qe_dx_rowcol_disp = {"parasail_sg_qe_dx_rowcol_disp", parasail_sg_qe_dx_rowcol_disp_functions};
+#if HAVE_SSE2
+static parasail_function_info_t parasail_sg_qx_db_rowcol_sse2_functions[] = {
+{parasail_sg_qx_db_rowcol,            "parasail_sg_qx_db_rowcol",            "sg_qx_db",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 0, 1},
+{parasail_sg_qx_db_rowcol_scan,       "parasail_sg_qx_db_rowcol_scan",       "sg_qx_db",    "scan", "NA",     "32", "32",  1, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_scan_sse2_128_64, "parasail_sg_qx_db_rowcol_scan_sse2_128_64", "sg_qx_db",    "scan", "sse2",  "128", "64",  2, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_scan_sse2_128_32, "parasail_sg_qx_db_rowcol_scan_sse2_128_32", "sg_qx_db",    "scan", "sse2",  "128", "32",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_scan_sse2_128_16, "parasail_sg_qx_db_rowcol_scan_sse2_128_16", "sg_qx_db",    "scan", "sse2",  "128", "16",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_scan_sse2_128_8, "parasail_sg_qx_db_rowcol_scan_sse2_128_8", "sg_qx_db",    "scan", "sse2",  "128",  "8", 16, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_striped_sse2_128_64, "parasail_sg_qx_db_rowcol_striped_sse2_128_64", "sg_qx_db", "striped", "sse2",  "128", "64",  2, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_striped_sse2_128_32, "parasail_sg_qx_db_rowcol_striped_sse2_128_32", "sg_qx_db", "striped", "sse2",  "128", "32",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_striped_sse2_128_16, "parasail_sg_qx_db_rowcol_striped_sse2_128_16", "sg_qx_db", "striped", "sse2",  "128", "16",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_striped_sse2_128_8, "parasail_sg_qx_db_rowcol_striped_sse2_128_8", "sg_qx_db", "striped", "sse2",  "128",  "8", 16, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_diag_sse2_128_64, "parasail_sg_qx_db_rowcol_diag_sse2_128_64", "sg_qx_db",    "diag", "sse2",  "128", "64",  2, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_diag_sse2_128_32, "parasail_sg_qx_db_rowcol_diag_sse2_128_32", "sg_qx_db",    "diag", "sse2",  "128", "32",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_diag_sse2_128_16, "parasail_sg_qx_db_rowcol_diag_sse2_128_16", "sg_qx_db",    "diag", "sse2",  "128", "16",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_diag_sse2_128_8, "parasail_sg_qx_db_rowcol_diag_sse2_128_8", "sg_qx_db",    "diag", "sse2",  "128",  "8", 16, 0, 0, 0, 0, 0},
+{NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
+};
+static parasail_function_group_t parasail_sg_qx_db_rowcol_sse2 = {"parasail_sg_qx_db_rowcol_sse2", parasail_sg_qx_db_rowcol_sse2_functions};
+#endif
+#if HAVE_SSE41
+static parasail_function_info_t parasail_sg_qx_db_rowcol_sse41_functions[] = {
+{parasail_sg_qx_db_rowcol,            "parasail_sg_qx_db_rowcol",            "sg_qx_db",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 0, 1},
+{parasail_sg_qx_db_rowcol_scan,       "parasail_sg_qx_db_rowcol_scan",       "sg_qx_db",    "scan", "NA",     "32", "32",  1, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_scan_sse41_128_64, "parasail_sg_qx_db_rowcol_scan_sse41_128_64", "sg_qx_db",    "scan", "sse41", "128", "64",  2, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_scan_sse41_128_32, "parasail_sg_qx_db_rowcol_scan_sse41_128_32", "sg_qx_db",    "scan", "sse41", "128", "32",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_scan_sse41_128_16, "parasail_sg_qx_db_rowcol_scan_sse41_128_16", "sg_qx_db",    "scan", "sse41", "128", "16",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_scan_sse41_128_8, "parasail_sg_qx_db_rowcol_scan_sse41_128_8", "sg_qx_db",    "scan", "sse41", "128",  "8", 16, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_striped_sse41_128_64, "parasail_sg_qx_db_rowcol_striped_sse41_128_64", "sg_qx_db", "striped", "sse41", "128", "64",  2, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_striped_sse41_128_32, "parasail_sg_qx_db_rowcol_striped_sse41_128_32", "sg_qx_db", "striped", "sse41", "128", "32",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_striped_sse41_128_16, "parasail_sg_qx_db_rowcol_striped_sse41_128_16", "sg_qx_db", "striped", "sse41", "128", "16",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_striped_sse41_128_8, "parasail_sg_qx_db_rowcol_striped_sse41_128_8", "sg_qx_db", "striped", "sse41", "128",  "8", 16, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_diag_sse41_128_64, "parasail_sg_qx_db_rowcol_diag_sse41_128_64", "sg_qx_db",    "diag", "sse41", "128", "64",  2, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_diag_sse41_128_32, "parasail_sg_qx_db_rowcol_diag_sse41_128_32", "sg_qx_db",    "diag", "sse41", "128", "32",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_diag_sse41_128_16, "parasail_sg_qx_db_rowcol_diag_sse41_128_16", "sg_qx_db",    "diag", "sse41", "128", "16",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_diag_sse41_128_8, "parasail_sg_qx_db_rowcol_diag_sse41_128_8", "sg_qx_db",    "diag", "sse41", "128",  "8", 16, 0, 0, 0, 0, 0},
+{NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
+};
+static parasail_function_group_t parasail_sg_qx_db_rowcol_sse41 = {"parasail_sg_qx_db_rowcol_sse41", parasail_sg_qx_db_rowcol_sse41_functions};
+#endif
+#if HAVE_AVX2
+static parasail_function_info_t parasail_sg_qx_db_rowcol_avx2_functions[] = {
+{parasail_sg_qx_db_rowcol,            "parasail_sg_qx_db_rowcol",            "sg_qx_db",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 0, 1},
+{parasail_sg_qx_db_rowcol_scan,       "parasail_sg_qx_db_rowcol_scan",       "sg_qx_db",    "scan", "NA",     "32", "32",  1, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_scan_avx2_256_64, "parasail_sg_qx_db_rowcol_scan_avx2_256_64", "sg_qx_db",    "scan", "avx2",  "256", "64",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_scan_avx2_256_32, "parasail_sg_qx_db_rowcol_scan_avx2_256_32", "sg_qx_db",    "scan", "avx2",  "256", "32",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_scan_avx2_256_16, "parasail_sg_qx_db_rowcol_scan_avx2_256_16", "sg_qx_db",    "scan", "avx2",  "256", "16", 16, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_scan_avx2_256_8, "parasail_sg_qx_db_rowcol_scan_avx2_256_8", "sg_qx_db",    "scan", "avx2",  "256",  "8", 32, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_striped_avx2_256_64, "parasail_sg_qx_db_rowcol_striped_avx2_256_64", "sg_qx_db", "striped", "avx2",  "256", "64",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_striped_avx2_256_32, "parasail_sg_qx_db_rowcol_striped_avx2_256_32", "sg_qx_db", "striped", "avx2",  "256", "32",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_striped_avx2_256_16, "parasail_sg_qx_db_rowcol_striped_avx2_256_16", "sg_qx_db", "striped", "avx2",  "256", "16", 16, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_striped_avx2_256_8, "parasail_sg_qx_db_rowcol_striped_avx2_256_8", "sg_qx_db", "striped", "avx2",  "256",  "8", 32, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_diag_avx2_256_64, "parasail_sg_qx_db_rowcol_diag_avx2_256_64", "sg_qx_db",    "diag", "avx2",  "256", "64",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_diag_avx2_256_32, "parasail_sg_qx_db_rowcol_diag_avx2_256_32", "sg_qx_db",    "diag", "avx2",  "256", "32",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_diag_avx2_256_16, "parasail_sg_qx_db_rowcol_diag_avx2_256_16", "sg_qx_db",    "diag", "avx2",  "256", "16", 16, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_diag_avx2_256_8, "parasail_sg_qx_db_rowcol_diag_avx2_256_8", "sg_qx_db",    "diag", "avx2",  "256",  "8", 32, 0, 0, 0, 0, 0},
+{NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
+};
+static parasail_function_group_t parasail_sg_qx_db_rowcol_avx2 = {"parasail_sg_qx_db_rowcol_avx2", parasail_sg_qx_db_rowcol_avx2_functions};
+#endif
+#if HAVE_ALTIVEC
+static parasail_function_info_t parasail_sg_qx_db_rowcol_altivec_functions[] = {
+{parasail_sg_qx_db_rowcol,            "parasail_sg_qx_db_rowcol",            "sg_qx_db",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 0, 1},
+{parasail_sg_qx_db_rowcol_scan,       "parasail_sg_qx_db_rowcol_scan",       "sg_qx_db",    "scan", "NA",     "32", "32",  1, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_scan_altivec_128_64, "parasail_sg_qx_db_rowcol_scan_altivec_128_64", "sg_qx_db",    "scan", "altivec", "128", "64",  2, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_scan_altivec_128_32, "parasail_sg_qx_db_rowcol_scan_altivec_128_32", "sg_qx_db",    "scan", "altivec", "128", "32",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_scan_altivec_128_16, "parasail_sg_qx_db_rowcol_scan_altivec_128_16", "sg_qx_db",    "scan", "altivec", "128", "16",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_scan_altivec_128_8, "parasail_sg_qx_db_rowcol_scan_altivec_128_8", "sg_qx_db",    "scan", "altivec", "128",  "8", 16, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_striped_altivec_128_64, "parasail_sg_qx_db_rowcol_striped_altivec_128_64", "sg_qx_db", "striped", "altivec", "128", "64",  2, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_striped_altivec_128_32, "parasail_sg_qx_db_rowcol_striped_altivec_128_32", "sg_qx_db", "striped", "altivec", "128", "32",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_striped_altivec_128_16, "parasail_sg_qx_db_rowcol_striped_altivec_128_16", "sg_qx_db", "striped", "altivec", "128", "16",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_striped_altivec_128_8, "parasail_sg_qx_db_rowcol_striped_altivec_128_8", "sg_qx_db", "striped", "altivec", "128",  "8", 16, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_diag_altivec_128_64, "parasail_sg_qx_db_rowcol_diag_altivec_128_64", "sg_qx_db",    "diag", "altivec", "128", "64",  2, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_diag_altivec_128_32, "parasail_sg_qx_db_rowcol_diag_altivec_128_32", "sg_qx_db",    "diag", "altivec", "128", "32",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_diag_altivec_128_16, "parasail_sg_qx_db_rowcol_diag_altivec_128_16", "sg_qx_db",    "diag", "altivec", "128", "16",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_diag_altivec_128_8, "parasail_sg_qx_db_rowcol_diag_altivec_128_8", "sg_qx_db",    "diag", "altivec", "128",  "8", 16, 0, 0, 0, 0, 0},
+{NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
+};
+static parasail_function_group_t parasail_sg_qx_db_rowcol_altivec = {"parasail_sg_qx_db_rowcol_altivec", parasail_sg_qx_db_rowcol_altivec_functions};
+#endif
+#if HAVE_NEON
+static parasail_function_info_t parasail_sg_qx_db_rowcol_neon_functions[] = {
+{parasail_sg_qx_db_rowcol,            "parasail_sg_qx_db_rowcol",            "sg_qx_db",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 0, 1},
+{parasail_sg_qx_db_rowcol_scan,       "parasail_sg_qx_db_rowcol_scan",       "sg_qx_db",    "scan", "NA",     "32", "32",  1, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_scan_neon_128_64, "parasail_sg_qx_db_rowcol_scan_neon_128_64", "sg_qx_db",    "scan", "neon",  "128", "64",  2, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_scan_neon_128_32, "parasail_sg_qx_db_rowcol_scan_neon_128_32", "sg_qx_db",    "scan", "neon",  "128", "32",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_scan_neon_128_16, "parasail_sg_qx_db_rowcol_scan_neon_128_16", "sg_qx_db",    "scan", "neon",  "128", "16",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_scan_neon_128_8, "parasail_sg_qx_db_rowcol_scan_neon_128_8", "sg_qx_db",    "scan", "neon",  "128",  "8", 16, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_striped_neon_128_64, "parasail_sg_qx_db_rowcol_striped_neon_128_64", "sg_qx_db", "striped", "neon",  "128", "64",  2, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_striped_neon_128_32, "parasail_sg_qx_db_rowcol_striped_neon_128_32", "sg_qx_db", "striped", "neon",  "128", "32",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_striped_neon_128_16, "parasail_sg_qx_db_rowcol_striped_neon_128_16", "sg_qx_db", "striped", "neon",  "128", "16",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_striped_neon_128_8, "parasail_sg_qx_db_rowcol_striped_neon_128_8", "sg_qx_db", "striped", "neon",  "128",  "8", 16, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_diag_neon_128_64, "parasail_sg_qx_db_rowcol_diag_neon_128_64", "sg_qx_db",    "diag", "neon",  "128", "64",  2, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_diag_neon_128_32, "parasail_sg_qx_db_rowcol_diag_neon_128_32", "sg_qx_db",    "diag", "neon",  "128", "32",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_diag_neon_128_16, "parasail_sg_qx_db_rowcol_diag_neon_128_16", "sg_qx_db",    "diag", "neon",  "128", "16",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_diag_neon_128_8, "parasail_sg_qx_db_rowcol_diag_neon_128_8", "sg_qx_db",    "diag", "neon",  "128",  "8", 16, 0, 0, 0, 0, 0},
+{NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
+};
+static parasail_function_group_t parasail_sg_qx_db_rowcol_neon = {"parasail_sg_qx_db_rowcol_neon", parasail_sg_qx_db_rowcol_neon_functions};
+#endif
+static parasail_function_info_t parasail_sg_qx_db_rowcol_disp_functions[] = {
+{parasail_sg_qx_db_rowcol,            "parasail_sg_qx_db_rowcol",            "sg_qx_db",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 0, 1},
+{parasail_sg_qx_db_rowcol_scan,       "parasail_sg_qx_db_rowcol_scan",       "sg_qx_db",    "scan", "NA",     "32", "32",  1, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_scan_64,    "parasail_sg_qx_db_rowcol_scan_64",    "sg_qx_db",    "scan", "disp",   "NA", "64", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_scan_32,    "parasail_sg_qx_db_rowcol_scan_32",    "sg_qx_db",    "scan", "disp",   "NA", "32", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_scan_16,    "parasail_sg_qx_db_rowcol_scan_16",    "sg_qx_db",    "scan", "disp",   "NA", "16", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_scan_8,     "parasail_sg_qx_db_rowcol_scan_8",     "sg_qx_db",    "scan", "disp",   "NA",  "8", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_striped_64, "parasail_sg_qx_db_rowcol_striped_64", "sg_qx_db", "striped", "disp",   "NA", "64", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_striped_32, "parasail_sg_qx_db_rowcol_striped_32", "sg_qx_db", "striped", "disp",   "NA", "32", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_striped_16, "parasail_sg_qx_db_rowcol_striped_16", "sg_qx_db", "striped", "disp",   "NA", "16", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_striped_8,  "parasail_sg_qx_db_rowcol_striped_8",  "sg_qx_db", "striped", "disp",   "NA",  "8", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_diag_64,    "parasail_sg_qx_db_rowcol_diag_64",    "sg_qx_db",    "diag", "disp",   "NA", "64", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_diag_32,    "parasail_sg_qx_db_rowcol_diag_32",    "sg_qx_db",    "diag", "disp",   "NA", "32", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_diag_16,    "parasail_sg_qx_db_rowcol_diag_16",    "sg_qx_db",    "diag", "disp",   "NA", "16", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_diag_8,     "parasail_sg_qx_db_rowcol_diag_8",     "sg_qx_db",    "diag", "disp",   "NA",  "8", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_scan_sat,   "parasail_sg_qx_db_rowcol_scan_sat",   "sg_qx_db",    "scan", "sat",    "NA",  "8", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_striped_sat, "parasail_sg_qx_db_rowcol_striped_sat", "sg_qx_db", "striped", "sat",    "NA",  "8", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qx_db_rowcol_diag_sat,   "parasail_sg_qx_db_rowcol_diag_sat",   "sg_qx_db",    "diag", "sat",    "NA",  "8", -1, 0, 0, 0, 0, 0},
+{NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
+};
+static parasail_function_group_t parasail_sg_qx_db_rowcol_disp = {"parasail_sg_qx_db_rowcol_disp", parasail_sg_qx_db_rowcol_disp_functions};
+#if HAVE_SSE2
+static parasail_function_info_t parasail_sg_qx_de_rowcol_sse2_functions[] = {
+{parasail_sg_qx_de_rowcol,            "parasail_sg_qx_de_rowcol",            "sg_qx_de",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 0, 1},
+{parasail_sg_qx_de_rowcol_scan,       "parasail_sg_qx_de_rowcol_scan",       "sg_qx_de",    "scan", "NA",     "32", "32",  1, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_scan_sse2_128_64, "parasail_sg_qx_de_rowcol_scan_sse2_128_64", "sg_qx_de",    "scan", "sse2",  "128", "64",  2, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_scan_sse2_128_32, "parasail_sg_qx_de_rowcol_scan_sse2_128_32", "sg_qx_de",    "scan", "sse2",  "128", "32",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_scan_sse2_128_16, "parasail_sg_qx_de_rowcol_scan_sse2_128_16", "sg_qx_de",    "scan", "sse2",  "128", "16",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_scan_sse2_128_8, "parasail_sg_qx_de_rowcol_scan_sse2_128_8", "sg_qx_de",    "scan", "sse2",  "128",  "8", 16, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_striped_sse2_128_64, "parasail_sg_qx_de_rowcol_striped_sse2_128_64", "sg_qx_de", "striped", "sse2",  "128", "64",  2, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_striped_sse2_128_32, "parasail_sg_qx_de_rowcol_striped_sse2_128_32", "sg_qx_de", "striped", "sse2",  "128", "32",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_striped_sse2_128_16, "parasail_sg_qx_de_rowcol_striped_sse2_128_16", "sg_qx_de", "striped", "sse2",  "128", "16",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_striped_sse2_128_8, "parasail_sg_qx_de_rowcol_striped_sse2_128_8", "sg_qx_de", "striped", "sse2",  "128",  "8", 16, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_diag_sse2_128_64, "parasail_sg_qx_de_rowcol_diag_sse2_128_64", "sg_qx_de",    "diag", "sse2",  "128", "64",  2, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_diag_sse2_128_32, "parasail_sg_qx_de_rowcol_diag_sse2_128_32", "sg_qx_de",    "diag", "sse2",  "128", "32",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_diag_sse2_128_16, "parasail_sg_qx_de_rowcol_diag_sse2_128_16", "sg_qx_de",    "diag", "sse2",  "128", "16",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_diag_sse2_128_8, "parasail_sg_qx_de_rowcol_diag_sse2_128_8", "sg_qx_de",    "diag", "sse2",  "128",  "8", 16, 0, 0, 0, 0, 0},
+{NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
+};
+static parasail_function_group_t parasail_sg_qx_de_rowcol_sse2 = {"parasail_sg_qx_de_rowcol_sse2", parasail_sg_qx_de_rowcol_sse2_functions};
+#endif
+#if HAVE_SSE41
+static parasail_function_info_t parasail_sg_qx_de_rowcol_sse41_functions[] = {
+{parasail_sg_qx_de_rowcol,            "parasail_sg_qx_de_rowcol",            "sg_qx_de",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 0, 1},
+{parasail_sg_qx_de_rowcol_scan,       "parasail_sg_qx_de_rowcol_scan",       "sg_qx_de",    "scan", "NA",     "32", "32",  1, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_scan_sse41_128_64, "parasail_sg_qx_de_rowcol_scan_sse41_128_64", "sg_qx_de",    "scan", "sse41", "128", "64",  2, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_scan_sse41_128_32, "parasail_sg_qx_de_rowcol_scan_sse41_128_32", "sg_qx_de",    "scan", "sse41", "128", "32",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_scan_sse41_128_16, "parasail_sg_qx_de_rowcol_scan_sse41_128_16", "sg_qx_de",    "scan", "sse41", "128", "16",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_scan_sse41_128_8, "parasail_sg_qx_de_rowcol_scan_sse41_128_8", "sg_qx_de",    "scan", "sse41", "128",  "8", 16, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_striped_sse41_128_64, "parasail_sg_qx_de_rowcol_striped_sse41_128_64", "sg_qx_de", "striped", "sse41", "128", "64",  2, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_striped_sse41_128_32, "parasail_sg_qx_de_rowcol_striped_sse41_128_32", "sg_qx_de", "striped", "sse41", "128", "32",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_striped_sse41_128_16, "parasail_sg_qx_de_rowcol_striped_sse41_128_16", "sg_qx_de", "striped", "sse41", "128", "16",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_striped_sse41_128_8, "parasail_sg_qx_de_rowcol_striped_sse41_128_8", "sg_qx_de", "striped", "sse41", "128",  "8", 16, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_diag_sse41_128_64, "parasail_sg_qx_de_rowcol_diag_sse41_128_64", "sg_qx_de",    "diag", "sse41", "128", "64",  2, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_diag_sse41_128_32, "parasail_sg_qx_de_rowcol_diag_sse41_128_32", "sg_qx_de",    "diag", "sse41", "128", "32",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_diag_sse41_128_16, "parasail_sg_qx_de_rowcol_diag_sse41_128_16", "sg_qx_de",    "diag", "sse41", "128", "16",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_diag_sse41_128_8, "parasail_sg_qx_de_rowcol_diag_sse41_128_8", "sg_qx_de",    "diag", "sse41", "128",  "8", 16, 0, 0, 0, 0, 0},
+{NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
+};
+static parasail_function_group_t parasail_sg_qx_de_rowcol_sse41 = {"parasail_sg_qx_de_rowcol_sse41", parasail_sg_qx_de_rowcol_sse41_functions};
+#endif
+#if HAVE_AVX2
+static parasail_function_info_t parasail_sg_qx_de_rowcol_avx2_functions[] = {
+{parasail_sg_qx_de_rowcol,            "parasail_sg_qx_de_rowcol",            "sg_qx_de",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 0, 1},
+{parasail_sg_qx_de_rowcol_scan,       "parasail_sg_qx_de_rowcol_scan",       "sg_qx_de",    "scan", "NA",     "32", "32",  1, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_scan_avx2_256_64, "parasail_sg_qx_de_rowcol_scan_avx2_256_64", "sg_qx_de",    "scan", "avx2",  "256", "64",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_scan_avx2_256_32, "parasail_sg_qx_de_rowcol_scan_avx2_256_32", "sg_qx_de",    "scan", "avx2",  "256", "32",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_scan_avx2_256_16, "parasail_sg_qx_de_rowcol_scan_avx2_256_16", "sg_qx_de",    "scan", "avx2",  "256", "16", 16, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_scan_avx2_256_8, "parasail_sg_qx_de_rowcol_scan_avx2_256_8", "sg_qx_de",    "scan", "avx2",  "256",  "8", 32, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_striped_avx2_256_64, "parasail_sg_qx_de_rowcol_striped_avx2_256_64", "sg_qx_de", "striped", "avx2",  "256", "64",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_striped_avx2_256_32, "parasail_sg_qx_de_rowcol_striped_avx2_256_32", "sg_qx_de", "striped", "avx2",  "256", "32",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_striped_avx2_256_16, "parasail_sg_qx_de_rowcol_striped_avx2_256_16", "sg_qx_de", "striped", "avx2",  "256", "16", 16, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_striped_avx2_256_8, "parasail_sg_qx_de_rowcol_striped_avx2_256_8", "sg_qx_de", "striped", "avx2",  "256",  "8", 32, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_diag_avx2_256_64, "parasail_sg_qx_de_rowcol_diag_avx2_256_64", "sg_qx_de",    "diag", "avx2",  "256", "64",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_diag_avx2_256_32, "parasail_sg_qx_de_rowcol_diag_avx2_256_32", "sg_qx_de",    "diag", "avx2",  "256", "32",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_diag_avx2_256_16, "parasail_sg_qx_de_rowcol_diag_avx2_256_16", "sg_qx_de",    "diag", "avx2",  "256", "16", 16, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_diag_avx2_256_8, "parasail_sg_qx_de_rowcol_diag_avx2_256_8", "sg_qx_de",    "diag", "avx2",  "256",  "8", 32, 0, 0, 0, 0, 0},
+{NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
+};
+static parasail_function_group_t parasail_sg_qx_de_rowcol_avx2 = {"parasail_sg_qx_de_rowcol_avx2", parasail_sg_qx_de_rowcol_avx2_functions};
+#endif
+#if HAVE_ALTIVEC
+static parasail_function_info_t parasail_sg_qx_de_rowcol_altivec_functions[] = {
+{parasail_sg_qx_de_rowcol,            "parasail_sg_qx_de_rowcol",            "sg_qx_de",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 0, 1},
+{parasail_sg_qx_de_rowcol_scan,       "parasail_sg_qx_de_rowcol_scan",       "sg_qx_de",    "scan", "NA",     "32", "32",  1, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_scan_altivec_128_64, "parasail_sg_qx_de_rowcol_scan_altivec_128_64", "sg_qx_de",    "scan", "altivec", "128", "64",  2, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_scan_altivec_128_32, "parasail_sg_qx_de_rowcol_scan_altivec_128_32", "sg_qx_de",    "scan", "altivec", "128", "32",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_scan_altivec_128_16, "parasail_sg_qx_de_rowcol_scan_altivec_128_16", "sg_qx_de",    "scan", "altivec", "128", "16",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_scan_altivec_128_8, "parasail_sg_qx_de_rowcol_scan_altivec_128_8", "sg_qx_de",    "scan", "altivec", "128",  "8", 16, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_striped_altivec_128_64, "parasail_sg_qx_de_rowcol_striped_altivec_128_64", "sg_qx_de", "striped", "altivec", "128", "64",  2, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_striped_altivec_128_32, "parasail_sg_qx_de_rowcol_striped_altivec_128_32", "sg_qx_de", "striped", "altivec", "128", "32",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_striped_altivec_128_16, "parasail_sg_qx_de_rowcol_striped_altivec_128_16", "sg_qx_de", "striped", "altivec", "128", "16",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_striped_altivec_128_8, "parasail_sg_qx_de_rowcol_striped_altivec_128_8", "sg_qx_de", "striped", "altivec", "128",  "8", 16, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_diag_altivec_128_64, "parasail_sg_qx_de_rowcol_diag_altivec_128_64", "sg_qx_de",    "diag", "altivec", "128", "64",  2, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_diag_altivec_128_32, "parasail_sg_qx_de_rowcol_diag_altivec_128_32", "sg_qx_de",    "diag", "altivec", "128", "32",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_diag_altivec_128_16, "parasail_sg_qx_de_rowcol_diag_altivec_128_16", "sg_qx_de",    "diag", "altivec", "128", "16",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_diag_altivec_128_8, "parasail_sg_qx_de_rowcol_diag_altivec_128_8", "sg_qx_de",    "diag", "altivec", "128",  "8", 16, 0, 0, 0, 0, 0},
+{NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
+};
+static parasail_function_group_t parasail_sg_qx_de_rowcol_altivec = {"parasail_sg_qx_de_rowcol_altivec", parasail_sg_qx_de_rowcol_altivec_functions};
+#endif
+#if HAVE_NEON
+static parasail_function_info_t parasail_sg_qx_de_rowcol_neon_functions[] = {
+{parasail_sg_qx_de_rowcol,            "parasail_sg_qx_de_rowcol",            "sg_qx_de",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 0, 1},
+{parasail_sg_qx_de_rowcol_scan,       "parasail_sg_qx_de_rowcol_scan",       "sg_qx_de",    "scan", "NA",     "32", "32",  1, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_scan_neon_128_64, "parasail_sg_qx_de_rowcol_scan_neon_128_64", "sg_qx_de",    "scan", "neon",  "128", "64",  2, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_scan_neon_128_32, "parasail_sg_qx_de_rowcol_scan_neon_128_32", "sg_qx_de",    "scan", "neon",  "128", "32",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_scan_neon_128_16, "parasail_sg_qx_de_rowcol_scan_neon_128_16", "sg_qx_de",    "scan", "neon",  "128", "16",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_scan_neon_128_8, "parasail_sg_qx_de_rowcol_scan_neon_128_8", "sg_qx_de",    "scan", "neon",  "128",  "8", 16, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_striped_neon_128_64, "parasail_sg_qx_de_rowcol_striped_neon_128_64", "sg_qx_de", "striped", "neon",  "128", "64",  2, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_striped_neon_128_32, "parasail_sg_qx_de_rowcol_striped_neon_128_32", "sg_qx_de", "striped", "neon",  "128", "32",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_striped_neon_128_16, "parasail_sg_qx_de_rowcol_striped_neon_128_16", "sg_qx_de", "striped", "neon",  "128", "16",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_striped_neon_128_8, "parasail_sg_qx_de_rowcol_striped_neon_128_8", "sg_qx_de", "striped", "neon",  "128",  "8", 16, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_diag_neon_128_64, "parasail_sg_qx_de_rowcol_diag_neon_128_64", "sg_qx_de",    "diag", "neon",  "128", "64",  2, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_diag_neon_128_32, "parasail_sg_qx_de_rowcol_diag_neon_128_32", "sg_qx_de",    "diag", "neon",  "128", "32",  4, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_diag_neon_128_16, "parasail_sg_qx_de_rowcol_diag_neon_128_16", "sg_qx_de",    "diag", "neon",  "128", "16",  8, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_diag_neon_128_8, "parasail_sg_qx_de_rowcol_diag_neon_128_8", "sg_qx_de",    "diag", "neon",  "128",  "8", 16, 0, 0, 0, 0, 0},
+{NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
+};
+static parasail_function_group_t parasail_sg_qx_de_rowcol_neon = {"parasail_sg_qx_de_rowcol_neon", parasail_sg_qx_de_rowcol_neon_functions};
+#endif
+static parasail_function_info_t parasail_sg_qx_de_rowcol_disp_functions[] = {
+{parasail_sg_qx_de_rowcol,            "parasail_sg_qx_de_rowcol",            "sg_qx_de",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 0, 1},
+{parasail_sg_qx_de_rowcol_scan,       "parasail_sg_qx_de_rowcol_scan",       "sg_qx_de",    "scan", "NA",     "32", "32",  1, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_scan_64,    "parasail_sg_qx_de_rowcol_scan_64",    "sg_qx_de",    "scan", "disp",   "NA", "64", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_scan_32,    "parasail_sg_qx_de_rowcol_scan_32",    "sg_qx_de",    "scan", "disp",   "NA", "32", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_scan_16,    "parasail_sg_qx_de_rowcol_scan_16",    "sg_qx_de",    "scan", "disp",   "NA", "16", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_scan_8,     "parasail_sg_qx_de_rowcol_scan_8",     "sg_qx_de",    "scan", "disp",   "NA",  "8", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_striped_64, "parasail_sg_qx_de_rowcol_striped_64", "sg_qx_de", "striped", "disp",   "NA", "64", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_striped_32, "parasail_sg_qx_de_rowcol_striped_32", "sg_qx_de", "striped", "disp",   "NA", "32", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_striped_16, "parasail_sg_qx_de_rowcol_striped_16", "sg_qx_de", "striped", "disp",   "NA", "16", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_striped_8,  "parasail_sg_qx_de_rowcol_striped_8",  "sg_qx_de", "striped", "disp",   "NA",  "8", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_diag_64,    "parasail_sg_qx_de_rowcol_diag_64",    "sg_qx_de",    "diag", "disp",   "NA", "64", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_diag_32,    "parasail_sg_qx_de_rowcol_diag_32",    "sg_qx_de",    "diag", "disp",   "NA", "32", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_diag_16,    "parasail_sg_qx_de_rowcol_diag_16",    "sg_qx_de",    "diag", "disp",   "NA", "16", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_diag_8,     "parasail_sg_qx_de_rowcol_diag_8",     "sg_qx_de",    "diag", "disp",   "NA",  "8", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_scan_sat,   "parasail_sg_qx_de_rowcol_scan_sat",   "sg_qx_de",    "scan", "sat",    "NA",  "8", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_striped_sat, "parasail_sg_qx_de_rowcol_striped_sat", "sg_qx_de", "striped", "sat",    "NA",  "8", -1, 0, 0, 0, 0, 0},
+{parasail_sg_qx_de_rowcol_diag_sat,   "parasail_sg_qx_de_rowcol_diag_sat",   "sg_qx_de",    "diag", "sat",    "NA",  "8", -1, 0, 0, 0, 0, 0},
+{NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
+};
+static parasail_function_group_t parasail_sg_qx_de_rowcol_disp = {"parasail_sg_qx_de_rowcol_disp", parasail_sg_qx_de_rowcol_disp_functions};
+#if HAVE_SSE2
 static parasail_function_info_t parasail_nw_stats_rowcol_sse2_functions[] = {
 {parasail_nw_stats_rowcol,            "parasail_nw_stats_rowcol",            "nw_stats",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 1, 1},
 {parasail_nw_stats_rowcol_scan,       "parasail_nw_stats_rowcol_scan",       "nw_stats",    "scan", "NA",     "32", "32",  1, 0, 0, 0, 1, 0},
@@ -3161,6 +3629,488 @@ static parasail_function_info_t parasail_sg_qe_de_stats_rowcol_disp_functions[] 
 {NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
 };
 static parasail_function_group_t parasail_sg_qe_de_stats_rowcol_disp = {"parasail_sg_qe_de_stats_rowcol_disp", parasail_sg_qe_de_stats_rowcol_disp_functions};
-
-#endif /* _PARASAIL_FUNCTION_GROUP_ROWCOL_H_ */
-
+#if HAVE_SSE2
+static parasail_function_info_t parasail_sg_qb_dx_stats_rowcol_sse2_functions[] = {
+{parasail_sg_qb_dx_stats_rowcol,      "parasail_sg_qb_dx_stats_rowcol",      "sg_qb_dx_stats",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 1, 1},
+{parasail_sg_qb_dx_stats_rowcol_scan, "parasail_sg_qb_dx_stats_rowcol_scan", "sg_qb_dx_stats",    "scan", "NA",     "32", "32",  1, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_scan_sse2_128_64, "parasail_sg_qb_dx_stats_rowcol_scan_sse2_128_64", "sg_qb_dx_stats",    "scan", "sse2",  "128", "64",  2, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_scan_sse2_128_32, "parasail_sg_qb_dx_stats_rowcol_scan_sse2_128_32", "sg_qb_dx_stats",    "scan", "sse2",  "128", "32",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_scan_sse2_128_16, "parasail_sg_qb_dx_stats_rowcol_scan_sse2_128_16", "sg_qb_dx_stats",    "scan", "sse2",  "128", "16",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_scan_sse2_128_8, "parasail_sg_qb_dx_stats_rowcol_scan_sse2_128_8", "sg_qb_dx_stats",    "scan", "sse2",  "128",  "8", 16, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_striped_sse2_128_64, "parasail_sg_qb_dx_stats_rowcol_striped_sse2_128_64", "sg_qb_dx_stats", "striped", "sse2",  "128", "64",  2, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_striped_sse2_128_32, "parasail_sg_qb_dx_stats_rowcol_striped_sse2_128_32", "sg_qb_dx_stats", "striped", "sse2",  "128", "32",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_striped_sse2_128_16, "parasail_sg_qb_dx_stats_rowcol_striped_sse2_128_16", "sg_qb_dx_stats", "striped", "sse2",  "128", "16",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_striped_sse2_128_8, "parasail_sg_qb_dx_stats_rowcol_striped_sse2_128_8", "sg_qb_dx_stats", "striped", "sse2",  "128",  "8", 16, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_diag_sse2_128_64, "parasail_sg_qb_dx_stats_rowcol_diag_sse2_128_64", "sg_qb_dx_stats",    "diag", "sse2",  "128", "64",  2, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_diag_sse2_128_32, "parasail_sg_qb_dx_stats_rowcol_diag_sse2_128_32", "sg_qb_dx_stats",    "diag", "sse2",  "128", "32",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_diag_sse2_128_16, "parasail_sg_qb_dx_stats_rowcol_diag_sse2_128_16", "sg_qb_dx_stats",    "diag", "sse2",  "128", "16",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_diag_sse2_128_8, "parasail_sg_qb_dx_stats_rowcol_diag_sse2_128_8", "sg_qb_dx_stats",    "diag", "sse2",  "128",  "8", 16, 0, 0, 0, 1, 0},
+{NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
+};
+static parasail_function_group_t parasail_sg_qb_dx_stats_rowcol_sse2 = {"parasail_sg_qb_dx_stats_rowcol_sse2", parasail_sg_qb_dx_stats_rowcol_sse2_functions};
+#endif
+#if HAVE_SSE41
+static parasail_function_info_t parasail_sg_qb_dx_stats_rowcol_sse41_functions[] = {
+{parasail_sg_qb_dx_stats_rowcol,      "parasail_sg_qb_dx_stats_rowcol",      "sg_qb_dx_stats",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 1, 1},
+{parasail_sg_qb_dx_stats_rowcol_scan, "parasail_sg_qb_dx_stats_rowcol_scan", "sg_qb_dx_stats",    "scan", "NA",     "32", "32",  1, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_scan_sse41_128_64, "parasail_sg_qb_dx_stats_rowcol_scan_sse41_128_64", "sg_qb_dx_stats",    "scan", "sse41", "128", "64",  2, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_scan_sse41_128_32, "parasail_sg_qb_dx_stats_rowcol_scan_sse41_128_32", "sg_qb_dx_stats",    "scan", "sse41", "128", "32",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_scan_sse41_128_16, "parasail_sg_qb_dx_stats_rowcol_scan_sse41_128_16", "sg_qb_dx_stats",    "scan", "sse41", "128", "16",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_scan_sse41_128_8, "parasail_sg_qb_dx_stats_rowcol_scan_sse41_128_8", "sg_qb_dx_stats",    "scan", "sse41", "128",  "8", 16, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_striped_sse41_128_64, "parasail_sg_qb_dx_stats_rowcol_striped_sse41_128_64", "sg_qb_dx_stats", "striped", "sse41", "128", "64",  2, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_striped_sse41_128_32, "parasail_sg_qb_dx_stats_rowcol_striped_sse41_128_32", "sg_qb_dx_stats", "striped", "sse41", "128", "32",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_striped_sse41_128_16, "parasail_sg_qb_dx_stats_rowcol_striped_sse41_128_16", "sg_qb_dx_stats", "striped", "sse41", "128", "16",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_striped_sse41_128_8, "parasail_sg_qb_dx_stats_rowcol_striped_sse41_128_8", "sg_qb_dx_stats", "striped", "sse41", "128",  "8", 16, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_diag_sse41_128_64, "parasail_sg_qb_dx_stats_rowcol_diag_sse41_128_64", "sg_qb_dx_stats",    "diag", "sse41", "128", "64",  2, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_diag_sse41_128_32, "parasail_sg_qb_dx_stats_rowcol_diag_sse41_128_32", "sg_qb_dx_stats",    "diag", "sse41", "128", "32",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_diag_sse41_128_16, "parasail_sg_qb_dx_stats_rowcol_diag_sse41_128_16", "sg_qb_dx_stats",    "diag", "sse41", "128", "16",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_diag_sse41_128_8, "parasail_sg_qb_dx_stats_rowcol_diag_sse41_128_8", "sg_qb_dx_stats",    "diag", "sse41", "128",  "8", 16, 0, 0, 0, 1, 0},
+{NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
+};
+static parasail_function_group_t parasail_sg_qb_dx_stats_rowcol_sse41 = {"parasail_sg_qb_dx_stats_rowcol_sse41", parasail_sg_qb_dx_stats_rowcol_sse41_functions};
+#endif
+#if HAVE_AVX2
+static parasail_function_info_t parasail_sg_qb_dx_stats_rowcol_avx2_functions[] = {
+{parasail_sg_qb_dx_stats_rowcol,      "parasail_sg_qb_dx_stats_rowcol",      "sg_qb_dx_stats",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 1, 1},
+{parasail_sg_qb_dx_stats_rowcol_scan, "parasail_sg_qb_dx_stats_rowcol_scan", "sg_qb_dx_stats",    "scan", "NA",     "32", "32",  1, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_scan_avx2_256_64, "parasail_sg_qb_dx_stats_rowcol_scan_avx2_256_64", "sg_qb_dx_stats",    "scan", "avx2",  "256", "64",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_scan_avx2_256_32, "parasail_sg_qb_dx_stats_rowcol_scan_avx2_256_32", "sg_qb_dx_stats",    "scan", "avx2",  "256", "32",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_scan_avx2_256_16, "parasail_sg_qb_dx_stats_rowcol_scan_avx2_256_16", "sg_qb_dx_stats",    "scan", "avx2",  "256", "16", 16, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_scan_avx2_256_8, "parasail_sg_qb_dx_stats_rowcol_scan_avx2_256_8", "sg_qb_dx_stats",    "scan", "avx2",  "256",  "8", 32, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_striped_avx2_256_64, "parasail_sg_qb_dx_stats_rowcol_striped_avx2_256_64", "sg_qb_dx_stats", "striped", "avx2",  "256", "64",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_striped_avx2_256_32, "parasail_sg_qb_dx_stats_rowcol_striped_avx2_256_32", "sg_qb_dx_stats", "striped", "avx2",  "256", "32",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_striped_avx2_256_16, "parasail_sg_qb_dx_stats_rowcol_striped_avx2_256_16", "sg_qb_dx_stats", "striped", "avx2",  "256", "16", 16, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_striped_avx2_256_8, "parasail_sg_qb_dx_stats_rowcol_striped_avx2_256_8", "sg_qb_dx_stats", "striped", "avx2",  "256",  "8", 32, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_diag_avx2_256_64, "parasail_sg_qb_dx_stats_rowcol_diag_avx2_256_64", "sg_qb_dx_stats",    "diag", "avx2",  "256", "64",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_diag_avx2_256_32, "parasail_sg_qb_dx_stats_rowcol_diag_avx2_256_32", "sg_qb_dx_stats",    "diag", "avx2",  "256", "32",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_diag_avx2_256_16, "parasail_sg_qb_dx_stats_rowcol_diag_avx2_256_16", "sg_qb_dx_stats",    "diag", "avx2",  "256", "16", 16, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_diag_avx2_256_8, "parasail_sg_qb_dx_stats_rowcol_diag_avx2_256_8", "sg_qb_dx_stats",    "diag", "avx2",  "256",  "8", 32, 0, 0, 0, 1, 0},
+{NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
+};
+static parasail_function_group_t parasail_sg_qb_dx_stats_rowcol_avx2 = {"parasail_sg_qb_dx_stats_rowcol_avx2", parasail_sg_qb_dx_stats_rowcol_avx2_functions};
+#endif
+#if HAVE_ALTIVEC
+static parasail_function_info_t parasail_sg_qb_dx_stats_rowcol_altivec_functions[] = {
+{parasail_sg_qb_dx_stats_rowcol,      "parasail_sg_qb_dx_stats_rowcol",      "sg_qb_dx_stats",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 1, 1},
+{parasail_sg_qb_dx_stats_rowcol_scan, "parasail_sg_qb_dx_stats_rowcol_scan", "sg_qb_dx_stats",    "scan", "NA",     "32", "32",  1, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_scan_altivec_128_64, "parasail_sg_qb_dx_stats_rowcol_scan_altivec_128_64", "sg_qb_dx_stats",    "scan", "altivec", "128", "64",  2, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_scan_altivec_128_32, "parasail_sg_qb_dx_stats_rowcol_scan_altivec_128_32", "sg_qb_dx_stats",    "scan", "altivec", "128", "32",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_scan_altivec_128_16, "parasail_sg_qb_dx_stats_rowcol_scan_altivec_128_16", "sg_qb_dx_stats",    "scan", "altivec", "128", "16",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_scan_altivec_128_8, "parasail_sg_qb_dx_stats_rowcol_scan_altivec_128_8", "sg_qb_dx_stats",    "scan", "altivec", "128",  "8", 16, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_striped_altivec_128_64, "parasail_sg_qb_dx_stats_rowcol_striped_altivec_128_64", "sg_qb_dx_stats", "striped", "altivec", "128", "64",  2, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_striped_altivec_128_32, "parasail_sg_qb_dx_stats_rowcol_striped_altivec_128_32", "sg_qb_dx_stats", "striped", "altivec", "128", "32",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_striped_altivec_128_16, "parasail_sg_qb_dx_stats_rowcol_striped_altivec_128_16", "sg_qb_dx_stats", "striped", "altivec", "128", "16",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_striped_altivec_128_8, "parasail_sg_qb_dx_stats_rowcol_striped_altivec_128_8", "sg_qb_dx_stats", "striped", "altivec", "128",  "8", 16, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_diag_altivec_128_64, "parasail_sg_qb_dx_stats_rowcol_diag_altivec_128_64", "sg_qb_dx_stats",    "diag", "altivec", "128", "64",  2, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_diag_altivec_128_32, "parasail_sg_qb_dx_stats_rowcol_diag_altivec_128_32", "sg_qb_dx_stats",    "diag", "altivec", "128", "32",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_diag_altivec_128_16, "parasail_sg_qb_dx_stats_rowcol_diag_altivec_128_16", "sg_qb_dx_stats",    "diag", "altivec", "128", "16",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_diag_altivec_128_8, "parasail_sg_qb_dx_stats_rowcol_diag_altivec_128_8", "sg_qb_dx_stats",    "diag", "altivec", "128",  "8", 16, 0, 0, 0, 1, 0},
+{NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
+};
+static parasail_function_group_t parasail_sg_qb_dx_stats_rowcol_altivec = {"parasail_sg_qb_dx_stats_rowcol_altivec", parasail_sg_qb_dx_stats_rowcol_altivec_functions};
+#endif
+#if HAVE_NEON
+static parasail_function_info_t parasail_sg_qb_dx_stats_rowcol_neon_functions[] = {
+{parasail_sg_qb_dx_stats_rowcol,      "parasail_sg_qb_dx_stats_rowcol",      "sg_qb_dx_stats",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 1, 1},
+{parasail_sg_qb_dx_stats_rowcol_scan, "parasail_sg_qb_dx_stats_rowcol_scan", "sg_qb_dx_stats",    "scan", "NA",     "32", "32",  1, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_scan_neon_128_64, "parasail_sg_qb_dx_stats_rowcol_scan_neon_128_64", "sg_qb_dx_stats",    "scan", "neon",  "128", "64",  2, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_scan_neon_128_32, "parasail_sg_qb_dx_stats_rowcol_scan_neon_128_32", "sg_qb_dx_stats",    "scan", "neon",  "128", "32",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_scan_neon_128_16, "parasail_sg_qb_dx_stats_rowcol_scan_neon_128_16", "sg_qb_dx_stats",    "scan", "neon",  "128", "16",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_scan_neon_128_8, "parasail_sg_qb_dx_stats_rowcol_scan_neon_128_8", "sg_qb_dx_stats",    "scan", "neon",  "128",  "8", 16, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_striped_neon_128_64, "parasail_sg_qb_dx_stats_rowcol_striped_neon_128_64", "sg_qb_dx_stats", "striped", "neon",  "128", "64",  2, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_striped_neon_128_32, "parasail_sg_qb_dx_stats_rowcol_striped_neon_128_32", "sg_qb_dx_stats", "striped", "neon",  "128", "32",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_striped_neon_128_16, "parasail_sg_qb_dx_stats_rowcol_striped_neon_128_16", "sg_qb_dx_stats", "striped", "neon",  "128", "16",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_striped_neon_128_8, "parasail_sg_qb_dx_stats_rowcol_striped_neon_128_8", "sg_qb_dx_stats", "striped", "neon",  "128",  "8", 16, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_diag_neon_128_64, "parasail_sg_qb_dx_stats_rowcol_diag_neon_128_64", "sg_qb_dx_stats",    "diag", "neon",  "128", "64",  2, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_diag_neon_128_32, "parasail_sg_qb_dx_stats_rowcol_diag_neon_128_32", "sg_qb_dx_stats",    "diag", "neon",  "128", "32",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_diag_neon_128_16, "parasail_sg_qb_dx_stats_rowcol_diag_neon_128_16", "sg_qb_dx_stats",    "diag", "neon",  "128", "16",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_diag_neon_128_8, "parasail_sg_qb_dx_stats_rowcol_diag_neon_128_8", "sg_qb_dx_stats",    "diag", "neon",  "128",  "8", 16, 0, 0, 0, 1, 0},
+{NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
+};
+static parasail_function_group_t parasail_sg_qb_dx_stats_rowcol_neon = {"parasail_sg_qb_dx_stats_rowcol_neon", parasail_sg_qb_dx_stats_rowcol_neon_functions};
+#endif
+static parasail_function_info_t parasail_sg_qb_dx_stats_rowcol_disp_functions[] = {
+{parasail_sg_qb_dx_stats_rowcol,      "parasail_sg_qb_dx_stats_rowcol",      "sg_qb_dx_stats",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 1, 1},
+{parasail_sg_qb_dx_stats_rowcol_scan, "parasail_sg_qb_dx_stats_rowcol_scan", "sg_qb_dx_stats",    "scan", "NA",     "32", "32",  1, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_scan_64, "parasail_sg_qb_dx_stats_rowcol_scan_64", "sg_qb_dx_stats",    "scan", "disp",   "NA", "64", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_scan_32, "parasail_sg_qb_dx_stats_rowcol_scan_32", "sg_qb_dx_stats",    "scan", "disp",   "NA", "32", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_scan_16, "parasail_sg_qb_dx_stats_rowcol_scan_16", "sg_qb_dx_stats",    "scan", "disp",   "NA", "16", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_scan_8, "parasail_sg_qb_dx_stats_rowcol_scan_8", "sg_qb_dx_stats",    "scan", "disp",   "NA",  "8", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_striped_64, "parasail_sg_qb_dx_stats_rowcol_striped_64", "sg_qb_dx_stats", "striped", "disp",   "NA", "64", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_striped_32, "parasail_sg_qb_dx_stats_rowcol_striped_32", "sg_qb_dx_stats", "striped", "disp",   "NA", "32", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_striped_16, "parasail_sg_qb_dx_stats_rowcol_striped_16", "sg_qb_dx_stats", "striped", "disp",   "NA", "16", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_striped_8, "parasail_sg_qb_dx_stats_rowcol_striped_8", "sg_qb_dx_stats", "striped", "disp",   "NA",  "8", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_diag_64, "parasail_sg_qb_dx_stats_rowcol_diag_64", "sg_qb_dx_stats",    "diag", "disp",   "NA", "64", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_diag_32, "parasail_sg_qb_dx_stats_rowcol_diag_32", "sg_qb_dx_stats",    "diag", "disp",   "NA", "32", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_diag_16, "parasail_sg_qb_dx_stats_rowcol_diag_16", "sg_qb_dx_stats",    "diag", "disp",   "NA", "16", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_diag_8, "parasail_sg_qb_dx_stats_rowcol_diag_8", "sg_qb_dx_stats",    "diag", "disp",   "NA",  "8", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_scan_sat, "parasail_sg_qb_dx_stats_rowcol_scan_sat", "sg_qb_dx_stats",    "scan", "sat",    "NA",  "8", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_striped_sat, "parasail_sg_qb_dx_stats_rowcol_striped_sat", "sg_qb_dx_stats", "striped", "sat",    "NA",  "8", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qb_dx_stats_rowcol_diag_sat, "parasail_sg_qb_dx_stats_rowcol_diag_sat", "sg_qb_dx_stats",    "diag", "sat",    "NA",  "8", -1, 0, 0, 0, 1, 0},
+{NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
+};
+static parasail_function_group_t parasail_sg_qb_dx_stats_rowcol_disp = {"parasail_sg_qb_dx_stats_rowcol_disp", parasail_sg_qb_dx_stats_rowcol_disp_functions};
+#if HAVE_SSE2
+static parasail_function_info_t parasail_sg_qe_dx_stats_rowcol_sse2_functions[] = {
+{parasail_sg_qe_dx_stats_rowcol,      "parasail_sg_qe_dx_stats_rowcol",      "sg_qe_dx_stats",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 1, 1},
+{parasail_sg_qe_dx_stats_rowcol_scan, "parasail_sg_qe_dx_stats_rowcol_scan", "sg_qe_dx_stats",    "scan", "NA",     "32", "32",  1, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_scan_sse2_128_64, "parasail_sg_qe_dx_stats_rowcol_scan_sse2_128_64", "sg_qe_dx_stats",    "scan", "sse2",  "128", "64",  2, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_scan_sse2_128_32, "parasail_sg_qe_dx_stats_rowcol_scan_sse2_128_32", "sg_qe_dx_stats",    "scan", "sse2",  "128", "32",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_scan_sse2_128_16, "parasail_sg_qe_dx_stats_rowcol_scan_sse2_128_16", "sg_qe_dx_stats",    "scan", "sse2",  "128", "16",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_scan_sse2_128_8, "parasail_sg_qe_dx_stats_rowcol_scan_sse2_128_8", "sg_qe_dx_stats",    "scan", "sse2",  "128",  "8", 16, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_striped_sse2_128_64, "parasail_sg_qe_dx_stats_rowcol_striped_sse2_128_64", "sg_qe_dx_stats", "striped", "sse2",  "128", "64",  2, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_striped_sse2_128_32, "parasail_sg_qe_dx_stats_rowcol_striped_sse2_128_32", "sg_qe_dx_stats", "striped", "sse2",  "128", "32",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_striped_sse2_128_16, "parasail_sg_qe_dx_stats_rowcol_striped_sse2_128_16", "sg_qe_dx_stats", "striped", "sse2",  "128", "16",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_striped_sse2_128_8, "parasail_sg_qe_dx_stats_rowcol_striped_sse2_128_8", "sg_qe_dx_stats", "striped", "sse2",  "128",  "8", 16, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_diag_sse2_128_64, "parasail_sg_qe_dx_stats_rowcol_diag_sse2_128_64", "sg_qe_dx_stats",    "diag", "sse2",  "128", "64",  2, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_diag_sse2_128_32, "parasail_sg_qe_dx_stats_rowcol_diag_sse2_128_32", "sg_qe_dx_stats",    "diag", "sse2",  "128", "32",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_diag_sse2_128_16, "parasail_sg_qe_dx_stats_rowcol_diag_sse2_128_16", "sg_qe_dx_stats",    "diag", "sse2",  "128", "16",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_diag_sse2_128_8, "parasail_sg_qe_dx_stats_rowcol_diag_sse2_128_8", "sg_qe_dx_stats",    "diag", "sse2",  "128",  "8", 16, 0, 0, 0, 1, 0},
+{NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
+};
+static parasail_function_group_t parasail_sg_qe_dx_stats_rowcol_sse2 = {"parasail_sg_qe_dx_stats_rowcol_sse2", parasail_sg_qe_dx_stats_rowcol_sse2_functions};
+#endif
+#if HAVE_SSE41
+static parasail_function_info_t parasail_sg_qe_dx_stats_rowcol_sse41_functions[] = {
+{parasail_sg_qe_dx_stats_rowcol,      "parasail_sg_qe_dx_stats_rowcol",      "sg_qe_dx_stats",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 1, 1},
+{parasail_sg_qe_dx_stats_rowcol_scan, "parasail_sg_qe_dx_stats_rowcol_scan", "sg_qe_dx_stats",    "scan", "NA",     "32", "32",  1, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_scan_sse41_128_64, "parasail_sg_qe_dx_stats_rowcol_scan_sse41_128_64", "sg_qe_dx_stats",    "scan", "sse41", "128", "64",  2, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_scan_sse41_128_32, "parasail_sg_qe_dx_stats_rowcol_scan_sse41_128_32", "sg_qe_dx_stats",    "scan", "sse41", "128", "32",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_scan_sse41_128_16, "parasail_sg_qe_dx_stats_rowcol_scan_sse41_128_16", "sg_qe_dx_stats",    "scan", "sse41", "128", "16",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_scan_sse41_128_8, "parasail_sg_qe_dx_stats_rowcol_scan_sse41_128_8", "sg_qe_dx_stats",    "scan", "sse41", "128",  "8", 16, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_striped_sse41_128_64, "parasail_sg_qe_dx_stats_rowcol_striped_sse41_128_64", "sg_qe_dx_stats", "striped", "sse41", "128", "64",  2, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_striped_sse41_128_32, "parasail_sg_qe_dx_stats_rowcol_striped_sse41_128_32", "sg_qe_dx_stats", "striped", "sse41", "128", "32",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_striped_sse41_128_16, "parasail_sg_qe_dx_stats_rowcol_striped_sse41_128_16", "sg_qe_dx_stats", "striped", "sse41", "128", "16",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_striped_sse41_128_8, "parasail_sg_qe_dx_stats_rowcol_striped_sse41_128_8", "sg_qe_dx_stats", "striped", "sse41", "128",  "8", 16, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_diag_sse41_128_64, "parasail_sg_qe_dx_stats_rowcol_diag_sse41_128_64", "sg_qe_dx_stats",    "diag", "sse41", "128", "64",  2, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_diag_sse41_128_32, "parasail_sg_qe_dx_stats_rowcol_diag_sse41_128_32", "sg_qe_dx_stats",    "diag", "sse41", "128", "32",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_diag_sse41_128_16, "parasail_sg_qe_dx_stats_rowcol_diag_sse41_128_16", "sg_qe_dx_stats",    "diag", "sse41", "128", "16",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_diag_sse41_128_8, "parasail_sg_qe_dx_stats_rowcol_diag_sse41_128_8", "sg_qe_dx_stats",    "diag", "sse41", "128",  "8", 16, 0, 0, 0, 1, 0},
+{NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
+};
+static parasail_function_group_t parasail_sg_qe_dx_stats_rowcol_sse41 = {"parasail_sg_qe_dx_stats_rowcol_sse41", parasail_sg_qe_dx_stats_rowcol_sse41_functions};
+#endif
+#if HAVE_AVX2
+static parasail_function_info_t parasail_sg_qe_dx_stats_rowcol_avx2_functions[] = {
+{parasail_sg_qe_dx_stats_rowcol,      "parasail_sg_qe_dx_stats_rowcol",      "sg_qe_dx_stats",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 1, 1},
+{parasail_sg_qe_dx_stats_rowcol_scan, "parasail_sg_qe_dx_stats_rowcol_scan", "sg_qe_dx_stats",    "scan", "NA",     "32", "32",  1, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_scan_avx2_256_64, "parasail_sg_qe_dx_stats_rowcol_scan_avx2_256_64", "sg_qe_dx_stats",    "scan", "avx2",  "256", "64",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_scan_avx2_256_32, "parasail_sg_qe_dx_stats_rowcol_scan_avx2_256_32", "sg_qe_dx_stats",    "scan", "avx2",  "256", "32",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_scan_avx2_256_16, "parasail_sg_qe_dx_stats_rowcol_scan_avx2_256_16", "sg_qe_dx_stats",    "scan", "avx2",  "256", "16", 16, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_scan_avx2_256_8, "parasail_sg_qe_dx_stats_rowcol_scan_avx2_256_8", "sg_qe_dx_stats",    "scan", "avx2",  "256",  "8", 32, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_striped_avx2_256_64, "parasail_sg_qe_dx_stats_rowcol_striped_avx2_256_64", "sg_qe_dx_stats", "striped", "avx2",  "256", "64",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_striped_avx2_256_32, "parasail_sg_qe_dx_stats_rowcol_striped_avx2_256_32", "sg_qe_dx_stats", "striped", "avx2",  "256", "32",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_striped_avx2_256_16, "parasail_sg_qe_dx_stats_rowcol_striped_avx2_256_16", "sg_qe_dx_stats", "striped", "avx2",  "256", "16", 16, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_striped_avx2_256_8, "parasail_sg_qe_dx_stats_rowcol_striped_avx2_256_8", "sg_qe_dx_stats", "striped", "avx2",  "256",  "8", 32, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_diag_avx2_256_64, "parasail_sg_qe_dx_stats_rowcol_diag_avx2_256_64", "sg_qe_dx_stats",    "diag", "avx2",  "256", "64",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_diag_avx2_256_32, "parasail_sg_qe_dx_stats_rowcol_diag_avx2_256_32", "sg_qe_dx_stats",    "diag", "avx2",  "256", "32",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_diag_avx2_256_16, "parasail_sg_qe_dx_stats_rowcol_diag_avx2_256_16", "sg_qe_dx_stats",    "diag", "avx2",  "256", "16", 16, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_diag_avx2_256_8, "parasail_sg_qe_dx_stats_rowcol_diag_avx2_256_8", "sg_qe_dx_stats",    "diag", "avx2",  "256",  "8", 32, 0, 0, 0, 1, 0},
+{NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
+};
+static parasail_function_group_t parasail_sg_qe_dx_stats_rowcol_avx2 = {"parasail_sg_qe_dx_stats_rowcol_avx2", parasail_sg_qe_dx_stats_rowcol_avx2_functions};
+#endif
+#if HAVE_ALTIVEC
+static parasail_function_info_t parasail_sg_qe_dx_stats_rowcol_altivec_functions[] = {
+{parasail_sg_qe_dx_stats_rowcol,      "parasail_sg_qe_dx_stats_rowcol",      "sg_qe_dx_stats",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 1, 1},
+{parasail_sg_qe_dx_stats_rowcol_scan, "parasail_sg_qe_dx_stats_rowcol_scan", "sg_qe_dx_stats",    "scan", "NA",     "32", "32",  1, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_scan_altivec_128_64, "parasail_sg_qe_dx_stats_rowcol_scan_altivec_128_64", "sg_qe_dx_stats",    "scan", "altivec", "128", "64",  2, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_scan_altivec_128_32, "parasail_sg_qe_dx_stats_rowcol_scan_altivec_128_32", "sg_qe_dx_stats",    "scan", "altivec", "128", "32",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_scan_altivec_128_16, "parasail_sg_qe_dx_stats_rowcol_scan_altivec_128_16", "sg_qe_dx_stats",    "scan", "altivec", "128", "16",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_scan_altivec_128_8, "parasail_sg_qe_dx_stats_rowcol_scan_altivec_128_8", "sg_qe_dx_stats",    "scan", "altivec", "128",  "8", 16, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_striped_altivec_128_64, "parasail_sg_qe_dx_stats_rowcol_striped_altivec_128_64", "sg_qe_dx_stats", "striped", "altivec", "128", "64",  2, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_striped_altivec_128_32, "parasail_sg_qe_dx_stats_rowcol_striped_altivec_128_32", "sg_qe_dx_stats", "striped", "altivec", "128", "32",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_striped_altivec_128_16, "parasail_sg_qe_dx_stats_rowcol_striped_altivec_128_16", "sg_qe_dx_stats", "striped", "altivec", "128", "16",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_striped_altivec_128_8, "parasail_sg_qe_dx_stats_rowcol_striped_altivec_128_8", "sg_qe_dx_stats", "striped", "altivec", "128",  "8", 16, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_diag_altivec_128_64, "parasail_sg_qe_dx_stats_rowcol_diag_altivec_128_64", "sg_qe_dx_stats",    "diag", "altivec", "128", "64",  2, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_diag_altivec_128_32, "parasail_sg_qe_dx_stats_rowcol_diag_altivec_128_32", "sg_qe_dx_stats",    "diag", "altivec", "128", "32",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_diag_altivec_128_16, "parasail_sg_qe_dx_stats_rowcol_diag_altivec_128_16", "sg_qe_dx_stats",    "diag", "altivec", "128", "16",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_diag_altivec_128_8, "parasail_sg_qe_dx_stats_rowcol_diag_altivec_128_8", "sg_qe_dx_stats",    "diag", "altivec", "128",  "8", 16, 0, 0, 0, 1, 0},
+{NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
+};
+static parasail_function_group_t parasail_sg_qe_dx_stats_rowcol_altivec = {"parasail_sg_qe_dx_stats_rowcol_altivec", parasail_sg_qe_dx_stats_rowcol_altivec_functions};
+#endif
+#if HAVE_NEON
+static parasail_function_info_t parasail_sg_qe_dx_stats_rowcol_neon_functions[] = {
+{parasail_sg_qe_dx_stats_rowcol,      "parasail_sg_qe_dx_stats_rowcol",      "sg_qe_dx_stats",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 1, 1},
+{parasail_sg_qe_dx_stats_rowcol_scan, "parasail_sg_qe_dx_stats_rowcol_scan", "sg_qe_dx_stats",    "scan", "NA",     "32", "32",  1, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_scan_neon_128_64, "parasail_sg_qe_dx_stats_rowcol_scan_neon_128_64", "sg_qe_dx_stats",    "scan", "neon",  "128", "64",  2, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_scan_neon_128_32, "parasail_sg_qe_dx_stats_rowcol_scan_neon_128_32", "sg_qe_dx_stats",    "scan", "neon",  "128", "32",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_scan_neon_128_16, "parasail_sg_qe_dx_stats_rowcol_scan_neon_128_16", "sg_qe_dx_stats",    "scan", "neon",  "128", "16",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_scan_neon_128_8, "parasail_sg_qe_dx_stats_rowcol_scan_neon_128_8", "sg_qe_dx_stats",    "scan", "neon",  "128",  "8", 16, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_striped_neon_128_64, "parasail_sg_qe_dx_stats_rowcol_striped_neon_128_64", "sg_qe_dx_stats", "striped", "neon",  "128", "64",  2, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_striped_neon_128_32, "parasail_sg_qe_dx_stats_rowcol_striped_neon_128_32", "sg_qe_dx_stats", "striped", "neon",  "128", "32",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_striped_neon_128_16, "parasail_sg_qe_dx_stats_rowcol_striped_neon_128_16", "sg_qe_dx_stats", "striped", "neon",  "128", "16",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_striped_neon_128_8, "parasail_sg_qe_dx_stats_rowcol_striped_neon_128_8", "sg_qe_dx_stats", "striped", "neon",  "128",  "8", 16, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_diag_neon_128_64, "parasail_sg_qe_dx_stats_rowcol_diag_neon_128_64", "sg_qe_dx_stats",    "diag", "neon",  "128", "64",  2, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_diag_neon_128_32, "parasail_sg_qe_dx_stats_rowcol_diag_neon_128_32", "sg_qe_dx_stats",    "diag", "neon",  "128", "32",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_diag_neon_128_16, "parasail_sg_qe_dx_stats_rowcol_diag_neon_128_16", "sg_qe_dx_stats",    "diag", "neon",  "128", "16",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_diag_neon_128_8, "parasail_sg_qe_dx_stats_rowcol_diag_neon_128_8", "sg_qe_dx_stats",    "diag", "neon",  "128",  "8", 16, 0, 0, 0, 1, 0},
+{NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
+};
+static parasail_function_group_t parasail_sg_qe_dx_stats_rowcol_neon = {"parasail_sg_qe_dx_stats_rowcol_neon", parasail_sg_qe_dx_stats_rowcol_neon_functions};
+#endif
+static parasail_function_info_t parasail_sg_qe_dx_stats_rowcol_disp_functions[] = {
+{parasail_sg_qe_dx_stats_rowcol,      "parasail_sg_qe_dx_stats_rowcol",      "sg_qe_dx_stats",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 1, 1},
+{parasail_sg_qe_dx_stats_rowcol_scan, "parasail_sg_qe_dx_stats_rowcol_scan", "sg_qe_dx_stats",    "scan", "NA",     "32", "32",  1, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_scan_64, "parasail_sg_qe_dx_stats_rowcol_scan_64", "sg_qe_dx_stats",    "scan", "disp",   "NA", "64", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_scan_32, "parasail_sg_qe_dx_stats_rowcol_scan_32", "sg_qe_dx_stats",    "scan", "disp",   "NA", "32", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_scan_16, "parasail_sg_qe_dx_stats_rowcol_scan_16", "sg_qe_dx_stats",    "scan", "disp",   "NA", "16", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_scan_8, "parasail_sg_qe_dx_stats_rowcol_scan_8", "sg_qe_dx_stats",    "scan", "disp",   "NA",  "8", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_striped_64, "parasail_sg_qe_dx_stats_rowcol_striped_64", "sg_qe_dx_stats", "striped", "disp",   "NA", "64", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_striped_32, "parasail_sg_qe_dx_stats_rowcol_striped_32", "sg_qe_dx_stats", "striped", "disp",   "NA", "32", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_striped_16, "parasail_sg_qe_dx_stats_rowcol_striped_16", "sg_qe_dx_stats", "striped", "disp",   "NA", "16", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_striped_8, "parasail_sg_qe_dx_stats_rowcol_striped_8", "sg_qe_dx_stats", "striped", "disp",   "NA",  "8", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_diag_64, "parasail_sg_qe_dx_stats_rowcol_diag_64", "sg_qe_dx_stats",    "diag", "disp",   "NA", "64", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_diag_32, "parasail_sg_qe_dx_stats_rowcol_diag_32", "sg_qe_dx_stats",    "diag", "disp",   "NA", "32", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_diag_16, "parasail_sg_qe_dx_stats_rowcol_diag_16", "sg_qe_dx_stats",    "diag", "disp",   "NA", "16", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_diag_8, "parasail_sg_qe_dx_stats_rowcol_diag_8", "sg_qe_dx_stats",    "diag", "disp",   "NA",  "8", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_scan_sat, "parasail_sg_qe_dx_stats_rowcol_scan_sat", "sg_qe_dx_stats",    "scan", "sat",    "NA",  "8", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_striped_sat, "parasail_sg_qe_dx_stats_rowcol_striped_sat", "sg_qe_dx_stats", "striped", "sat",    "NA",  "8", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qe_dx_stats_rowcol_diag_sat, "parasail_sg_qe_dx_stats_rowcol_diag_sat", "sg_qe_dx_stats",    "diag", "sat",    "NA",  "8", -1, 0, 0, 0, 1, 0},
+{NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
+};
+static parasail_function_group_t parasail_sg_qe_dx_stats_rowcol_disp = {"parasail_sg_qe_dx_stats_rowcol_disp", parasail_sg_qe_dx_stats_rowcol_disp_functions};
+#if HAVE_SSE2
+static parasail_function_info_t parasail_sg_qx_db_stats_rowcol_sse2_functions[] = {
+{parasail_sg_qx_db_stats_rowcol,      "parasail_sg_qx_db_stats_rowcol",      "sg_qx_db_stats",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 1, 1},
+{parasail_sg_qx_db_stats_rowcol_scan, "parasail_sg_qx_db_stats_rowcol_scan", "sg_qx_db_stats",    "scan", "NA",     "32", "32",  1, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_scan_sse2_128_64, "parasail_sg_qx_db_stats_rowcol_scan_sse2_128_64", "sg_qx_db_stats",    "scan", "sse2",  "128", "64",  2, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_scan_sse2_128_32, "parasail_sg_qx_db_stats_rowcol_scan_sse2_128_32", "sg_qx_db_stats",    "scan", "sse2",  "128", "32",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_scan_sse2_128_16, "parasail_sg_qx_db_stats_rowcol_scan_sse2_128_16", "sg_qx_db_stats",    "scan", "sse2",  "128", "16",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_scan_sse2_128_8, "parasail_sg_qx_db_stats_rowcol_scan_sse2_128_8", "sg_qx_db_stats",    "scan", "sse2",  "128",  "8", 16, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_striped_sse2_128_64, "parasail_sg_qx_db_stats_rowcol_striped_sse2_128_64", "sg_qx_db_stats", "striped", "sse2",  "128", "64",  2, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_striped_sse2_128_32, "parasail_sg_qx_db_stats_rowcol_striped_sse2_128_32", "sg_qx_db_stats", "striped", "sse2",  "128", "32",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_striped_sse2_128_16, "parasail_sg_qx_db_stats_rowcol_striped_sse2_128_16", "sg_qx_db_stats", "striped", "sse2",  "128", "16",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_striped_sse2_128_8, "parasail_sg_qx_db_stats_rowcol_striped_sse2_128_8", "sg_qx_db_stats", "striped", "sse2",  "128",  "8", 16, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_diag_sse2_128_64, "parasail_sg_qx_db_stats_rowcol_diag_sse2_128_64", "sg_qx_db_stats",    "diag", "sse2",  "128", "64",  2, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_diag_sse2_128_32, "parasail_sg_qx_db_stats_rowcol_diag_sse2_128_32", "sg_qx_db_stats",    "diag", "sse2",  "128", "32",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_diag_sse2_128_16, "parasail_sg_qx_db_stats_rowcol_diag_sse2_128_16", "sg_qx_db_stats",    "diag", "sse2",  "128", "16",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_diag_sse2_128_8, "parasail_sg_qx_db_stats_rowcol_diag_sse2_128_8", "sg_qx_db_stats",    "diag", "sse2",  "128",  "8", 16, 0, 0, 0, 1, 0},
+{NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
+};
+static parasail_function_group_t parasail_sg_qx_db_stats_rowcol_sse2 = {"parasail_sg_qx_db_stats_rowcol_sse2", parasail_sg_qx_db_stats_rowcol_sse2_functions};
+#endif
+#if HAVE_SSE41
+static parasail_function_info_t parasail_sg_qx_db_stats_rowcol_sse41_functions[] = {
+{parasail_sg_qx_db_stats_rowcol,      "parasail_sg_qx_db_stats_rowcol",      "sg_qx_db_stats",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 1, 1},
+{parasail_sg_qx_db_stats_rowcol_scan, "parasail_sg_qx_db_stats_rowcol_scan", "sg_qx_db_stats",    "scan", "NA",     "32", "32",  1, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_scan_sse41_128_64, "parasail_sg_qx_db_stats_rowcol_scan_sse41_128_64", "sg_qx_db_stats",    "scan", "sse41", "128", "64",  2, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_scan_sse41_128_32, "parasail_sg_qx_db_stats_rowcol_scan_sse41_128_32", "sg_qx_db_stats",    "scan", "sse41", "128", "32",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_scan_sse41_128_16, "parasail_sg_qx_db_stats_rowcol_scan_sse41_128_16", "sg_qx_db_stats",    "scan", "sse41", "128", "16",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_scan_sse41_128_8, "parasail_sg_qx_db_stats_rowcol_scan_sse41_128_8", "sg_qx_db_stats",    "scan", "sse41", "128",  "8", 16, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_striped_sse41_128_64, "parasail_sg_qx_db_stats_rowcol_striped_sse41_128_64", "sg_qx_db_stats", "striped", "sse41", "128", "64",  2, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_striped_sse41_128_32, "parasail_sg_qx_db_stats_rowcol_striped_sse41_128_32", "sg_qx_db_stats", "striped", "sse41", "128", "32",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_striped_sse41_128_16, "parasail_sg_qx_db_stats_rowcol_striped_sse41_128_16", "sg_qx_db_stats", "striped", "sse41", "128", "16",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_striped_sse41_128_8, "parasail_sg_qx_db_stats_rowcol_striped_sse41_128_8", "sg_qx_db_stats", "striped", "sse41", "128",  "8", 16, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_diag_sse41_128_64, "parasail_sg_qx_db_stats_rowcol_diag_sse41_128_64", "sg_qx_db_stats",    "diag", "sse41", "128", "64",  2, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_diag_sse41_128_32, "parasail_sg_qx_db_stats_rowcol_diag_sse41_128_32", "sg_qx_db_stats",    "diag", "sse41", "128", "32",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_diag_sse41_128_16, "parasail_sg_qx_db_stats_rowcol_diag_sse41_128_16", "sg_qx_db_stats",    "diag", "sse41", "128", "16",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_diag_sse41_128_8, "parasail_sg_qx_db_stats_rowcol_diag_sse41_128_8", "sg_qx_db_stats",    "diag", "sse41", "128",  "8", 16, 0, 0, 0, 1, 0},
+{NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
+};
+static parasail_function_group_t parasail_sg_qx_db_stats_rowcol_sse41 = {"parasail_sg_qx_db_stats_rowcol_sse41", parasail_sg_qx_db_stats_rowcol_sse41_functions};
+#endif
+#if HAVE_AVX2
+static parasail_function_info_t parasail_sg_qx_db_stats_rowcol_avx2_functions[] = {
+{parasail_sg_qx_db_stats_rowcol,      "parasail_sg_qx_db_stats_rowcol",      "sg_qx_db_stats",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 1, 1},
+{parasail_sg_qx_db_stats_rowcol_scan, "parasail_sg_qx_db_stats_rowcol_scan", "sg_qx_db_stats",    "scan", "NA",     "32", "32",  1, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_scan_avx2_256_64, "parasail_sg_qx_db_stats_rowcol_scan_avx2_256_64", "sg_qx_db_stats",    "scan", "avx2",  "256", "64",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_scan_avx2_256_32, "parasail_sg_qx_db_stats_rowcol_scan_avx2_256_32", "sg_qx_db_stats",    "scan", "avx2",  "256", "32",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_scan_avx2_256_16, "parasail_sg_qx_db_stats_rowcol_scan_avx2_256_16", "sg_qx_db_stats",    "scan", "avx2",  "256", "16", 16, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_scan_avx2_256_8, "parasail_sg_qx_db_stats_rowcol_scan_avx2_256_8", "sg_qx_db_stats",    "scan", "avx2",  "256",  "8", 32, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_striped_avx2_256_64, "parasail_sg_qx_db_stats_rowcol_striped_avx2_256_64", "sg_qx_db_stats", "striped", "avx2",  "256", "64",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_striped_avx2_256_32, "parasail_sg_qx_db_stats_rowcol_striped_avx2_256_32", "sg_qx_db_stats", "striped", "avx2",  "256", "32",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_striped_avx2_256_16, "parasail_sg_qx_db_stats_rowcol_striped_avx2_256_16", "sg_qx_db_stats", "striped", "avx2",  "256", "16", 16, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_striped_avx2_256_8, "parasail_sg_qx_db_stats_rowcol_striped_avx2_256_8", "sg_qx_db_stats", "striped", "avx2",  "256",  "8", 32, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_diag_avx2_256_64, "parasail_sg_qx_db_stats_rowcol_diag_avx2_256_64", "sg_qx_db_stats",    "diag", "avx2",  "256", "64",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_diag_avx2_256_32, "parasail_sg_qx_db_stats_rowcol_diag_avx2_256_32", "sg_qx_db_stats",    "diag", "avx2",  "256", "32",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_diag_avx2_256_16, "parasail_sg_qx_db_stats_rowcol_diag_avx2_256_16", "sg_qx_db_stats",    "diag", "avx2",  "256", "16", 16, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_diag_avx2_256_8, "parasail_sg_qx_db_stats_rowcol_diag_avx2_256_8", "sg_qx_db_stats",    "diag", "avx2",  "256",  "8", 32, 0, 0, 0, 1, 0},
+{NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
+};
+static parasail_function_group_t parasail_sg_qx_db_stats_rowcol_avx2 = {"parasail_sg_qx_db_stats_rowcol_avx2", parasail_sg_qx_db_stats_rowcol_avx2_functions};
+#endif
+#if HAVE_ALTIVEC
+static parasail_function_info_t parasail_sg_qx_db_stats_rowcol_altivec_functions[] = {
+{parasail_sg_qx_db_stats_rowcol,      "parasail_sg_qx_db_stats_rowcol",      "sg_qx_db_stats",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 1, 1},
+{parasail_sg_qx_db_stats_rowcol_scan, "parasail_sg_qx_db_stats_rowcol_scan", "sg_qx_db_stats",    "scan", "NA",     "32", "32",  1, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_scan_altivec_128_64, "parasail_sg_qx_db_stats_rowcol_scan_altivec_128_64", "sg_qx_db_stats",    "scan", "altivec", "128", "64",  2, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_scan_altivec_128_32, "parasail_sg_qx_db_stats_rowcol_scan_altivec_128_32", "sg_qx_db_stats",    "scan", "altivec", "128", "32",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_scan_altivec_128_16, "parasail_sg_qx_db_stats_rowcol_scan_altivec_128_16", "sg_qx_db_stats",    "scan", "altivec", "128", "16",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_scan_altivec_128_8, "parasail_sg_qx_db_stats_rowcol_scan_altivec_128_8", "sg_qx_db_stats",    "scan", "altivec", "128",  "8", 16, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_striped_altivec_128_64, "parasail_sg_qx_db_stats_rowcol_striped_altivec_128_64", "sg_qx_db_stats", "striped", "altivec", "128", "64",  2, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_striped_altivec_128_32, "parasail_sg_qx_db_stats_rowcol_striped_altivec_128_32", "sg_qx_db_stats", "striped", "altivec", "128", "32",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_striped_altivec_128_16, "parasail_sg_qx_db_stats_rowcol_striped_altivec_128_16", "sg_qx_db_stats", "striped", "altivec", "128", "16",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_striped_altivec_128_8, "parasail_sg_qx_db_stats_rowcol_striped_altivec_128_8", "sg_qx_db_stats", "striped", "altivec", "128",  "8", 16, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_diag_altivec_128_64, "parasail_sg_qx_db_stats_rowcol_diag_altivec_128_64", "sg_qx_db_stats",    "diag", "altivec", "128", "64",  2, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_diag_altivec_128_32, "parasail_sg_qx_db_stats_rowcol_diag_altivec_128_32", "sg_qx_db_stats",    "diag", "altivec", "128", "32",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_diag_altivec_128_16, "parasail_sg_qx_db_stats_rowcol_diag_altivec_128_16", "sg_qx_db_stats",    "diag", "altivec", "128", "16",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_diag_altivec_128_8, "parasail_sg_qx_db_stats_rowcol_diag_altivec_128_8", "sg_qx_db_stats",    "diag", "altivec", "128",  "8", 16, 0, 0, 0, 1, 0},
+{NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
+};
+static parasail_function_group_t parasail_sg_qx_db_stats_rowcol_altivec = {"parasail_sg_qx_db_stats_rowcol_altivec", parasail_sg_qx_db_stats_rowcol_altivec_functions};
+#endif
+#if HAVE_NEON
+static parasail_function_info_t parasail_sg_qx_db_stats_rowcol_neon_functions[] = {
+{parasail_sg_qx_db_stats_rowcol,      "parasail_sg_qx_db_stats_rowcol",      "sg_qx_db_stats",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 1, 1},
+{parasail_sg_qx_db_stats_rowcol_scan, "parasail_sg_qx_db_stats_rowcol_scan", "sg_qx_db_stats",    "scan", "NA",     "32", "32",  1, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_scan_neon_128_64, "parasail_sg_qx_db_stats_rowcol_scan_neon_128_64", "sg_qx_db_stats",    "scan", "neon",  "128", "64",  2, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_scan_neon_128_32, "parasail_sg_qx_db_stats_rowcol_scan_neon_128_32", "sg_qx_db_stats",    "scan", "neon",  "128", "32",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_scan_neon_128_16, "parasail_sg_qx_db_stats_rowcol_scan_neon_128_16", "sg_qx_db_stats",    "scan", "neon",  "128", "16",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_scan_neon_128_8, "parasail_sg_qx_db_stats_rowcol_scan_neon_128_8", "sg_qx_db_stats",    "scan", "neon",  "128",  "8", 16, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_striped_neon_128_64, "parasail_sg_qx_db_stats_rowcol_striped_neon_128_64", "sg_qx_db_stats", "striped", "neon",  "128", "64",  2, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_striped_neon_128_32, "parasail_sg_qx_db_stats_rowcol_striped_neon_128_32", "sg_qx_db_stats", "striped", "neon",  "128", "32",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_striped_neon_128_16, "parasail_sg_qx_db_stats_rowcol_striped_neon_128_16", "sg_qx_db_stats", "striped", "neon",  "128", "16",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_striped_neon_128_8, "parasail_sg_qx_db_stats_rowcol_striped_neon_128_8", "sg_qx_db_stats", "striped", "neon",  "128",  "8", 16, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_diag_neon_128_64, "parasail_sg_qx_db_stats_rowcol_diag_neon_128_64", "sg_qx_db_stats",    "diag", "neon",  "128", "64",  2, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_diag_neon_128_32, "parasail_sg_qx_db_stats_rowcol_diag_neon_128_32", "sg_qx_db_stats",    "diag", "neon",  "128", "32",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_diag_neon_128_16, "parasail_sg_qx_db_stats_rowcol_diag_neon_128_16", "sg_qx_db_stats",    "diag", "neon",  "128", "16",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_diag_neon_128_8, "parasail_sg_qx_db_stats_rowcol_diag_neon_128_8", "sg_qx_db_stats",    "diag", "neon",  "128",  "8", 16, 0, 0, 0, 1, 0},
+{NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
+};
+static parasail_function_group_t parasail_sg_qx_db_stats_rowcol_neon = {"parasail_sg_qx_db_stats_rowcol_neon", parasail_sg_qx_db_stats_rowcol_neon_functions};
+#endif
+static parasail_function_info_t parasail_sg_qx_db_stats_rowcol_disp_functions[] = {
+{parasail_sg_qx_db_stats_rowcol,      "parasail_sg_qx_db_stats_rowcol",      "sg_qx_db_stats",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 1, 1},
+{parasail_sg_qx_db_stats_rowcol_scan, "parasail_sg_qx_db_stats_rowcol_scan", "sg_qx_db_stats",    "scan", "NA",     "32", "32",  1, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_scan_64, "parasail_sg_qx_db_stats_rowcol_scan_64", "sg_qx_db_stats",    "scan", "disp",   "NA", "64", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_scan_32, "parasail_sg_qx_db_stats_rowcol_scan_32", "sg_qx_db_stats",    "scan", "disp",   "NA", "32", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_scan_16, "parasail_sg_qx_db_stats_rowcol_scan_16", "sg_qx_db_stats",    "scan", "disp",   "NA", "16", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_scan_8, "parasail_sg_qx_db_stats_rowcol_scan_8", "sg_qx_db_stats",    "scan", "disp",   "NA",  "8", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_striped_64, "parasail_sg_qx_db_stats_rowcol_striped_64", "sg_qx_db_stats", "striped", "disp",   "NA", "64", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_striped_32, "parasail_sg_qx_db_stats_rowcol_striped_32", "sg_qx_db_stats", "striped", "disp",   "NA", "32", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_striped_16, "parasail_sg_qx_db_stats_rowcol_striped_16", "sg_qx_db_stats", "striped", "disp",   "NA", "16", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_striped_8, "parasail_sg_qx_db_stats_rowcol_striped_8", "sg_qx_db_stats", "striped", "disp",   "NA",  "8", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_diag_64, "parasail_sg_qx_db_stats_rowcol_diag_64", "sg_qx_db_stats",    "diag", "disp",   "NA", "64", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_diag_32, "parasail_sg_qx_db_stats_rowcol_diag_32", "sg_qx_db_stats",    "diag", "disp",   "NA", "32", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_diag_16, "parasail_sg_qx_db_stats_rowcol_diag_16", "sg_qx_db_stats",    "diag", "disp",   "NA", "16", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_diag_8, "parasail_sg_qx_db_stats_rowcol_diag_8", "sg_qx_db_stats",    "diag", "disp",   "NA",  "8", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_scan_sat, "parasail_sg_qx_db_stats_rowcol_scan_sat", "sg_qx_db_stats",    "scan", "sat",    "NA",  "8", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_striped_sat, "parasail_sg_qx_db_stats_rowcol_striped_sat", "sg_qx_db_stats", "striped", "sat",    "NA",  "8", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qx_db_stats_rowcol_diag_sat, "parasail_sg_qx_db_stats_rowcol_diag_sat", "sg_qx_db_stats",    "diag", "sat",    "NA",  "8", -1, 0, 0, 0, 1, 0},
+{NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
+};
+static parasail_function_group_t parasail_sg_qx_db_stats_rowcol_disp = {"parasail_sg_qx_db_stats_rowcol_disp", parasail_sg_qx_db_stats_rowcol_disp_functions};
+#if HAVE_SSE2
+static parasail_function_info_t parasail_sg_qx_de_stats_rowcol_sse2_functions[] = {
+{parasail_sg_qx_de_stats_rowcol,      "parasail_sg_qx_de_stats_rowcol",      "sg_qx_de_stats",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 1, 1},
+{parasail_sg_qx_de_stats_rowcol_scan, "parasail_sg_qx_de_stats_rowcol_scan", "sg_qx_de_stats",    "scan", "NA",     "32", "32",  1, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_scan_sse2_128_64, "parasail_sg_qx_de_stats_rowcol_scan_sse2_128_64", "sg_qx_de_stats",    "scan", "sse2",  "128", "64",  2, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_scan_sse2_128_32, "parasail_sg_qx_de_stats_rowcol_scan_sse2_128_32", "sg_qx_de_stats",    "scan", "sse2",  "128", "32",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_scan_sse2_128_16, "parasail_sg_qx_de_stats_rowcol_scan_sse2_128_16", "sg_qx_de_stats",    "scan", "sse2",  "128", "16",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_scan_sse2_128_8, "parasail_sg_qx_de_stats_rowcol_scan_sse2_128_8", "sg_qx_de_stats",    "scan", "sse2",  "128",  "8", 16, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_striped_sse2_128_64, "parasail_sg_qx_de_stats_rowcol_striped_sse2_128_64", "sg_qx_de_stats", "striped", "sse2",  "128", "64",  2, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_striped_sse2_128_32, "parasail_sg_qx_de_stats_rowcol_striped_sse2_128_32", "sg_qx_de_stats", "striped", "sse2",  "128", "32",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_striped_sse2_128_16, "parasail_sg_qx_de_stats_rowcol_striped_sse2_128_16", "sg_qx_de_stats", "striped", "sse2",  "128", "16",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_striped_sse2_128_8, "parasail_sg_qx_de_stats_rowcol_striped_sse2_128_8", "sg_qx_de_stats", "striped", "sse2",  "128",  "8", 16, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_diag_sse2_128_64, "parasail_sg_qx_de_stats_rowcol_diag_sse2_128_64", "sg_qx_de_stats",    "diag", "sse2",  "128", "64",  2, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_diag_sse2_128_32, "parasail_sg_qx_de_stats_rowcol_diag_sse2_128_32", "sg_qx_de_stats",    "diag", "sse2",  "128", "32",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_diag_sse2_128_16, "parasail_sg_qx_de_stats_rowcol_diag_sse2_128_16", "sg_qx_de_stats",    "diag", "sse2",  "128", "16",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_diag_sse2_128_8, "parasail_sg_qx_de_stats_rowcol_diag_sse2_128_8", "sg_qx_de_stats",    "diag", "sse2",  "128",  "8", 16, 0, 0, 0, 1, 0},
+{NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
+};
+static parasail_function_group_t parasail_sg_qx_de_stats_rowcol_sse2 = {"parasail_sg_qx_de_stats_rowcol_sse2", parasail_sg_qx_de_stats_rowcol_sse2_functions};
+#endif
+#if HAVE_SSE41
+static parasail_function_info_t parasail_sg_qx_de_stats_rowcol_sse41_functions[] = {
+{parasail_sg_qx_de_stats_rowcol,      "parasail_sg_qx_de_stats_rowcol",      "sg_qx_de_stats",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 1, 1},
+{parasail_sg_qx_de_stats_rowcol_scan, "parasail_sg_qx_de_stats_rowcol_scan", "sg_qx_de_stats",    "scan", "NA",     "32", "32",  1, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_scan_sse41_128_64, "parasail_sg_qx_de_stats_rowcol_scan_sse41_128_64", "sg_qx_de_stats",    "scan", "sse41", "128", "64",  2, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_scan_sse41_128_32, "parasail_sg_qx_de_stats_rowcol_scan_sse41_128_32", "sg_qx_de_stats",    "scan", "sse41", "128", "32",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_scan_sse41_128_16, "parasail_sg_qx_de_stats_rowcol_scan_sse41_128_16", "sg_qx_de_stats",    "scan", "sse41", "128", "16",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_scan_sse41_128_8, "parasail_sg_qx_de_stats_rowcol_scan_sse41_128_8", "sg_qx_de_stats",    "scan", "sse41", "128",  "8", 16, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_striped_sse41_128_64, "parasail_sg_qx_de_stats_rowcol_striped_sse41_128_64", "sg_qx_de_stats", "striped", "sse41", "128", "64",  2, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_striped_sse41_128_32, "parasail_sg_qx_de_stats_rowcol_striped_sse41_128_32", "sg_qx_de_stats", "striped", "sse41", "128", "32",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_striped_sse41_128_16, "parasail_sg_qx_de_stats_rowcol_striped_sse41_128_16", "sg_qx_de_stats", "striped", "sse41", "128", "16",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_striped_sse41_128_8, "parasail_sg_qx_de_stats_rowcol_striped_sse41_128_8", "sg_qx_de_stats", "striped", "sse41", "128",  "8", 16, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_diag_sse41_128_64, "parasail_sg_qx_de_stats_rowcol_diag_sse41_128_64", "sg_qx_de_stats",    "diag", "sse41", "128", "64",  2, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_diag_sse41_128_32, "parasail_sg_qx_de_stats_rowcol_diag_sse41_128_32", "sg_qx_de_stats",    "diag", "sse41", "128", "32",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_diag_sse41_128_16, "parasail_sg_qx_de_stats_rowcol_diag_sse41_128_16", "sg_qx_de_stats",    "diag", "sse41", "128", "16",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_diag_sse41_128_8, "parasail_sg_qx_de_stats_rowcol_diag_sse41_128_8", "sg_qx_de_stats",    "diag", "sse41", "128",  "8", 16, 0, 0, 0, 1, 0},
+{NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
+};
+static parasail_function_group_t parasail_sg_qx_de_stats_rowcol_sse41 = {"parasail_sg_qx_de_stats_rowcol_sse41", parasail_sg_qx_de_stats_rowcol_sse41_functions};
+#endif
+#if HAVE_AVX2
+static parasail_function_info_t parasail_sg_qx_de_stats_rowcol_avx2_functions[] = {
+{parasail_sg_qx_de_stats_rowcol,      "parasail_sg_qx_de_stats_rowcol",      "sg_qx_de_stats",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 1, 1},
+{parasail_sg_qx_de_stats_rowcol_scan, "parasail_sg_qx_de_stats_rowcol_scan", "sg_qx_de_stats",    "scan", "NA",     "32", "32",  1, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_scan_avx2_256_64, "parasail_sg_qx_de_stats_rowcol_scan_avx2_256_64", "sg_qx_de_stats",    "scan", "avx2",  "256", "64",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_scan_avx2_256_32, "parasail_sg_qx_de_stats_rowcol_scan_avx2_256_32", "sg_qx_de_stats",    "scan", "avx2",  "256", "32",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_scan_avx2_256_16, "parasail_sg_qx_de_stats_rowcol_scan_avx2_256_16", "sg_qx_de_stats",    "scan", "avx2",  "256", "16", 16, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_scan_avx2_256_8, "parasail_sg_qx_de_stats_rowcol_scan_avx2_256_8", "sg_qx_de_stats",    "scan", "avx2",  "256",  "8", 32, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_striped_avx2_256_64, "parasail_sg_qx_de_stats_rowcol_striped_avx2_256_64", "sg_qx_de_stats", "striped", "avx2",  "256", "64",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_striped_avx2_256_32, "parasail_sg_qx_de_stats_rowcol_striped_avx2_256_32", "sg_qx_de_stats", "striped", "avx2",  "256", "32",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_striped_avx2_256_16, "parasail_sg_qx_de_stats_rowcol_striped_avx2_256_16", "sg_qx_de_stats", "striped", "avx2",  "256", "16", 16, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_striped_avx2_256_8, "parasail_sg_qx_de_stats_rowcol_striped_avx2_256_8", "sg_qx_de_stats", "striped", "avx2",  "256",  "8", 32, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_diag_avx2_256_64, "parasail_sg_qx_de_stats_rowcol_diag_avx2_256_64", "sg_qx_de_stats",    "diag", "avx2",  "256", "64",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_diag_avx2_256_32, "parasail_sg_qx_de_stats_rowcol_diag_avx2_256_32", "sg_qx_de_stats",    "diag", "avx2",  "256", "32",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_diag_avx2_256_16, "parasail_sg_qx_de_stats_rowcol_diag_avx2_256_16", "sg_qx_de_stats",    "diag", "avx2",  "256", "16", 16, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_diag_avx2_256_8, "parasail_sg_qx_de_stats_rowcol_diag_avx2_256_8", "sg_qx_de_stats",    "diag", "avx2",  "256",  "8", 32, 0, 0, 0, 1, 0},
+{NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
+};
+static parasail_function_group_t parasail_sg_qx_de_stats_rowcol_avx2 = {"parasail_sg_qx_de_stats_rowcol_avx2", parasail_sg_qx_de_stats_rowcol_avx2_functions};
+#endif
+#if HAVE_ALTIVEC
+static parasail_function_info_t parasail_sg_qx_de_stats_rowcol_altivec_functions[] = {
+{parasail_sg_qx_de_stats_rowcol,      "parasail_sg_qx_de_stats_rowcol",      "sg_qx_de_stats",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 1, 1},
+{parasail_sg_qx_de_stats_rowcol_scan, "parasail_sg_qx_de_stats_rowcol_scan", "sg_qx_de_stats",    "scan", "NA",     "32", "32",  1, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_scan_altivec_128_64, "parasail_sg_qx_de_stats_rowcol_scan_altivec_128_64", "sg_qx_de_stats",    "scan", "altivec", "128", "64",  2, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_scan_altivec_128_32, "parasail_sg_qx_de_stats_rowcol_scan_altivec_128_32", "sg_qx_de_stats",    "scan", "altivec", "128", "32",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_scan_altivec_128_16, "parasail_sg_qx_de_stats_rowcol_scan_altivec_128_16", "sg_qx_de_stats",    "scan", "altivec", "128", "16",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_scan_altivec_128_8, "parasail_sg_qx_de_stats_rowcol_scan_altivec_128_8", "sg_qx_de_stats",    "scan", "altivec", "128",  "8", 16, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_striped_altivec_128_64, "parasail_sg_qx_de_stats_rowcol_striped_altivec_128_64", "sg_qx_de_stats", "striped", "altivec", "128", "64",  2, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_striped_altivec_128_32, "parasail_sg_qx_de_stats_rowcol_striped_altivec_128_32", "sg_qx_de_stats", "striped", "altivec", "128", "32",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_striped_altivec_128_16, "parasail_sg_qx_de_stats_rowcol_striped_altivec_128_16", "sg_qx_de_stats", "striped", "altivec", "128", "16",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_striped_altivec_128_8, "parasail_sg_qx_de_stats_rowcol_striped_altivec_128_8", "sg_qx_de_stats", "striped", "altivec", "128",  "8", 16, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_diag_altivec_128_64, "parasail_sg_qx_de_stats_rowcol_diag_altivec_128_64", "sg_qx_de_stats",    "diag", "altivec", "128", "64",  2, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_diag_altivec_128_32, "parasail_sg_qx_de_stats_rowcol_diag_altivec_128_32", "sg_qx_de_stats",    "diag", "altivec", "128", "32",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_diag_altivec_128_16, "parasail_sg_qx_de_stats_rowcol_diag_altivec_128_16", "sg_qx_de_stats",    "diag", "altivec", "128", "16",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_diag_altivec_128_8, "parasail_sg_qx_de_stats_rowcol_diag_altivec_128_8", "sg_qx_de_stats",    "diag", "altivec", "128",  "8", 16, 0, 0, 0, 1, 0},
+{NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
+};
+static parasail_function_group_t parasail_sg_qx_de_stats_rowcol_altivec = {"parasail_sg_qx_de_stats_rowcol_altivec", parasail_sg_qx_de_stats_rowcol_altivec_functions};
+#endif
+#if HAVE_NEON
+static parasail_function_info_t parasail_sg_qx_de_stats_rowcol_neon_functions[] = {
+{parasail_sg_qx_de_stats_rowcol,      "parasail_sg_qx_de_stats_rowcol",      "sg_qx_de_stats",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 1, 1},
+{parasail_sg_qx_de_stats_rowcol_scan, "parasail_sg_qx_de_stats_rowcol_scan", "sg_qx_de_stats",    "scan", "NA",     "32", "32",  1, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_scan_neon_128_64, "parasail_sg_qx_de_stats_rowcol_scan_neon_128_64", "sg_qx_de_stats",    "scan", "neon",  "128", "64",  2, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_scan_neon_128_32, "parasail_sg_qx_de_stats_rowcol_scan_neon_128_32", "sg_qx_de_stats",    "scan", "neon",  "128", "32",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_scan_neon_128_16, "parasail_sg_qx_de_stats_rowcol_scan_neon_128_16", "sg_qx_de_stats",    "scan", "neon",  "128", "16",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_scan_neon_128_8, "parasail_sg_qx_de_stats_rowcol_scan_neon_128_8", "sg_qx_de_stats",    "scan", "neon",  "128",  "8", 16, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_striped_neon_128_64, "parasail_sg_qx_de_stats_rowcol_striped_neon_128_64", "sg_qx_de_stats", "striped", "neon",  "128", "64",  2, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_striped_neon_128_32, "parasail_sg_qx_de_stats_rowcol_striped_neon_128_32", "sg_qx_de_stats", "striped", "neon",  "128", "32",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_striped_neon_128_16, "parasail_sg_qx_de_stats_rowcol_striped_neon_128_16", "sg_qx_de_stats", "striped", "neon",  "128", "16",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_striped_neon_128_8, "parasail_sg_qx_de_stats_rowcol_striped_neon_128_8", "sg_qx_de_stats", "striped", "neon",  "128",  "8", 16, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_diag_neon_128_64, "parasail_sg_qx_de_stats_rowcol_diag_neon_128_64", "sg_qx_de_stats",    "diag", "neon",  "128", "64",  2, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_diag_neon_128_32, "parasail_sg_qx_de_stats_rowcol_diag_neon_128_32", "sg_qx_de_stats",    "diag", "neon",  "128", "32",  4, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_diag_neon_128_16, "parasail_sg_qx_de_stats_rowcol_diag_neon_128_16", "sg_qx_de_stats",    "diag", "neon",  "128", "16",  8, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_diag_neon_128_8, "parasail_sg_qx_de_stats_rowcol_diag_neon_128_8", "sg_qx_de_stats",    "diag", "neon",  "128",  "8", 16, 0, 0, 0, 1, 0},
+{NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
+};
+static parasail_function_group_t parasail_sg_qx_de_stats_rowcol_neon = {"parasail_sg_qx_de_stats_rowcol_neon", parasail_sg_qx_de_stats_rowcol_neon_functions};
+#endif
+static parasail_function_info_t parasail_sg_qx_de_stats_rowcol_disp_functions[] = {
+{parasail_sg_qx_de_stats_rowcol,      "parasail_sg_qx_de_stats_rowcol",      "sg_qx_de_stats",    "orig", "NA",     "32", "32",  1, 0, 0, 0, 1, 1},
+{parasail_sg_qx_de_stats_rowcol_scan, "parasail_sg_qx_de_stats_rowcol_scan", "sg_qx_de_stats",    "scan", "NA",     "32", "32",  1, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_scan_64, "parasail_sg_qx_de_stats_rowcol_scan_64", "sg_qx_de_stats",    "scan", "disp",   "NA", "64", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_scan_32, "parasail_sg_qx_de_stats_rowcol_scan_32", "sg_qx_de_stats",    "scan", "disp",   "NA", "32", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_scan_16, "parasail_sg_qx_de_stats_rowcol_scan_16", "sg_qx_de_stats",    "scan", "disp",   "NA", "16", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_scan_8, "parasail_sg_qx_de_stats_rowcol_scan_8", "sg_qx_de_stats",    "scan", "disp",   "NA",  "8", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_striped_64, "parasail_sg_qx_de_stats_rowcol_striped_64", "sg_qx_de_stats", "striped", "disp",   "NA", "64", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_striped_32, "parasail_sg_qx_de_stats_rowcol_striped_32", "sg_qx_de_stats", "striped", "disp",   "NA", "32", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_striped_16, "parasail_sg_qx_de_stats_rowcol_striped_16", "sg_qx_de_stats", "striped", "disp",   "NA", "16", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_striped_8, "parasail_sg_qx_de_stats_rowcol_striped_8", "sg_qx_de_stats", "striped", "disp",   "NA",  "8", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_diag_64, "parasail_sg_qx_de_stats_rowcol_diag_64", "sg_qx_de_stats",    "diag", "disp",   "NA", "64", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_diag_32, "parasail_sg_qx_de_stats_rowcol_diag_32", "sg_qx_de_stats",    "diag", "disp",   "NA", "32", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_diag_16, "parasail_sg_qx_de_stats_rowcol_diag_16", "sg_qx_de_stats",    "diag", "disp",   "NA", "16", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_diag_8, "parasail_sg_qx_de_stats_rowcol_diag_8", "sg_qx_de_stats",    "diag", "disp",   "NA",  "8", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_scan_sat, "parasail_sg_qx_de_stats_rowcol_scan_sat", "sg_qx_de_stats",    "scan", "sat",    "NA",  "8", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_striped_sat, "parasail_sg_qx_de_stats_rowcol_striped_sat", "sg_qx_de_stats", "striped", "sat",    "NA",  "8", -1, 0, 0, 0, 1, 0},
+{parasail_sg_qx_de_stats_rowcol_diag_sat, "parasail_sg_qx_de_stats_rowcol_diag_sat", "sg_qx_de_stats",    "diag", "sat",    "NA",  "8", -1, 0, 0, 0, 1, 0},
+{NULL, "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 0, 0, 0, 0, 0, 0}
+};
+static parasail_function_group_t parasail_sg_qx_de_stats_rowcol_disp = {"parasail_sg_qx_de_stats_rowcol_disp", parasail_sg_qx_de_stats_rowcol_disp_functions};
+ #endif /* _PARASAIL_FUNCTION_GROUP_ROWCOL_H_ */ 
